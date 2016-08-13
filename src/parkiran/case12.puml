@@ -1,0 +1,25 @@
+@startuml
+Camera : String ip
+Camera : getPicture()
+Camera : getLicenseNumber()
+
+ControlSystem : printInvoice()
+ControlSystem : getPaid()
+ControlSystem : setPaid()
+ControlSystem : getPrice()
+ControlSystem : calculatePayment()
+ControlSystem : calculateTime()
+
+Ticket : String no
+Ticket : print()
+Ticket : getBarcode()
+
+Gate : int status
+Gate : openGate()
+Gate : closeGate()
+Gate : getStatus()
+
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+
+Operator : int operatorID
+Operator : String name
+Operator : String address
+Operator : String sex
+Operator : login()
+Operator : logout()
+
+Camera : int pictureID
+Camera : String pictureName
+Camera : Datetime time
+Camera : takePicture()
+Camera : viewPicture()
+
+Gate : int gateID
+Gate : String gateName
+Gate : openGate()
+Gate : closeGate()
+
+Barcode : int barcodeID
+Barcode : int barcodeNumber
+Barcode : scanBarcode()
+
+Trans : int id
+Trans : String number
+Trans : Datetime in
+Trans : Datetime out
+Trans : String picture
+Trans : String operator
+Trans : calculate()
+Trans : print()
+
+Operator -- Trans
+Camera -- Trans
+Gate -- Trans
+Barcode -- Trans
+@enduml

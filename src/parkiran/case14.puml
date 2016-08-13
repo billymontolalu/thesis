@@ -1,0 +1,39 @@
+@startuml
+Camera : String ip
+Camera : getLicensePic()
+Camera : saveVehicleData()
+
+Vehicle : noLicensePlate
+Vehicle : checkNoLicense()
+Vehicle : checkBarcode()
+Vehicle : find()
+Vehicle : payCharges()
+
+Ticket : noLicensePlate
+Ticket : clockIn
+Ticket : entryDate
+Ticket : print()
+Ticket : getTicket()
+Ticket : getBarcode()
+Ticket : find()
+
+Gate : int status
+Gate : openGate()
+Gate : closeGate()
+Gate : getStatus()
+
+ControlSystem : idParkingAttendant
+ControlSystem : printInvoices()
+ControlSystem : setPaid()
+ControlSystem : scanBarcode()
+ControlSystem : getPaid()
+ControlSystem : getPrice()
+
+Camera -- Ticket
+Camera -- Vehicle
+Vehicle -- Ticket
+ControlSystem -- Vehicle
+ControlSystem -- Gate
+ControlSystem -- Ticket
+
+@enduml
