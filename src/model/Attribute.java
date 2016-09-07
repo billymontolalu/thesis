@@ -5,12 +5,17 @@
  */
 package model;
 
-import graphmodel.Atom;
-
 /**
  *
  * @author Momo
  */
 public class Attribute extends Atom {
+    public Attribute()
+    {
+    }
     
+    public Attribute(String attributeName)
+    {
+        this.setLabel(attributeName);
+    }
 }

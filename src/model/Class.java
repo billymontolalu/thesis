@@ -5,8 +5,6 @@
  */
 package model;
 
-import graphmodel.Atom;
-
 /**
  *
  * @author Momo
@@ -14,6 +12,10 @@ import graphmodel.Atom;
 public class Class extends Atom {    
     public Class(){
         
+    }
+    
+    public Class(String className){
+        this.setLabel(className);
     }
 
 }

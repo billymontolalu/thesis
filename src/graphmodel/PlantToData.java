@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  */
 public class PlantToData {
     private void readData(){
-        InputStream in = getClass().getResourceAsStream("/parkiran/case0.puml");
+        InputStream in = getClass().getResourceAsStream("/parkiran/case10.puml");
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(in, "utf-8"));
             String line = null;

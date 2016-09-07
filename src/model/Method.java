@@ -5,12 +5,13 @@
  */
 package model;
 
-import graphmodel.Atom;
-
 /**
  *
  * @author Momo
  */
 public class Method extends Atom{
-    
+    public Method(String methodName)
+    {
+        this.setLabel(methodName);
+    }
 }

@@ -10,6 +10,7 @@ package graphmodel;
  * @author Momo
  */
 public final class EdgeVis {
-    public static final String ATTRIBUTE = "..>";
-    public static final String METHOD = "-->";
+    public static final String ATTRIBUTE = "*..>";
+    public static final String METHOD = "*-->";
+    public static final String CLASS = "--";
 }

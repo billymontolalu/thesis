@@ -4,7 +4,6 @@ Camera : getPicture()
 Camera : getLicenseNumber()
 
 ControlSystem : printInvoice()
-ControlSystem : printInvoice()
 ControlSystem : getPaid()
 ControlSystem : setPaid()
 ControlSystem : getPrice()

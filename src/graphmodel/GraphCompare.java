@@ -5,7 +5,10 @@
  */
 package graphmodel;
 
+import model.Atom;
+import model.Relation;
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -22,11 +25,63 @@ public class GraphCompare {
         this.v2 = v2;
     }
     
-    public DirectedGraph getDeletion(){
-        DirectedGraph dgSameEdge = getSameEdge();
-        DirectedGraph dgSameNoEdge = getSameNoEdge();
+    
+    
+    public DirectedGraph getDelete()
+    {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        //mencari node yang didelete
+        boolean found;
+        for(Object vertex1 : v1.vertexSet()){
+            found = false;
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : v2.vertexSet()){
+                Atom a2 = (Atom) vertex2;
+                
+                if(a1.getLabel().equals(a2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(vertex1);
+            }
+        }
+        //mencari relasi yang didelete
+        for(Object edge1 : v1.edgeSet())
+        {
+            found = false;
+            RelationshipEdge re1 = (RelationshipEdge) edge1;
+            Atom v1_1 = (Atom) re1.getV1();
+            Atom v1_2 = (Atom) re1.getV2();
+            for(Object edge2 : v2.edgeSet()){
+                RelationshipEdge re2 = (RelationshipEdge) edge2;
+                
+                Atom v2_1 = (Atom) re2.getV1();
+                Atom v2_2 = (Atom) re2.getV2();
+                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel()) && re1.getLabel().equals(re2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                Relation rel = new Relation();
+                rel.setLabel(v1_1.getLabel() + re1.getLabel() + v1_2.getLabel());
+                rel.setSource(v1_1);
+                rel.setDestination(v1_2);
+                dg.addVertex(rel);
+            }
+        }
+        return dg;
+    }
+    
+    public DirectedGraph getUnchange(){
+        DirectedGraph dgSameEdge = getSameEdge();
+        DirectedGraph dgSameNoEdge = getSameNoEdge();
+        
         Graphs.addGraph(dgSameEdge, dgSameNoEdge);
         return dgSameEdge;
     }
@@ -98,7 +153,7 @@ public class GraphCompare {
         boolean find;
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
-        DirectedGraph del = getDeletion();
+        DirectedGraph del = getUnchange();
         for(Object edge2 : v2.edgeSet()){
             find = false;
             RelationshipEdge re2 = (RelationshipEdge) edge2;

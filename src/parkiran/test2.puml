@@ -1,0 +1,7 @@
+@startuml
+s1 -- s2
+s1 -- s0
+s2 -- s0
+s2 -- s4
+s4 -- s1
+@enduml

@@ -5,9 +5,16 @@
  */
 package thesisapp;
 
+import com.jgraph.layout.JGraphFacade;
+import com.jgraph.layout.JGraphLayout;
+import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
+import com.mxgraph.layout.mxGraphLayout;
+import com.mxgraph.layout.mxOrganicLayout;
+import graphmodel.RelationshipEdge;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
+import java.util.Map;
 import javax.swing.JApplet;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -86,7 +93,8 @@ public class MainApp extends javax.swing.JFrame {
     
     public void initGraph(JApplet applet)
     {
-        // create a JGraphT graph
+        
+// create a JGraphT graph
         ListenableGraph<String, DefaultEdge> g =
             new ListenableDirectedMultigraph<String, DefaultEdge>(
                 DefaultEdge.class);
@@ -95,7 +103,7 @@ public class MainApp extends javax.swing.JFrame {
         jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(g);
 
         JGraph jgraph = new JGraph(jgAdapter);
-
+        
         adjustDisplaySettings(jgraph, applet);
         applet.getContentPane().add(jgraph);
         applet.resize(DEFAULT_SIZE);
@@ -115,13 +123,26 @@ public class MainApp extends javax.swing.JFrame {
         g.addEdge(v2, v3);
         g.addEdge(v3, v1);
         g.addEdge(v4, v3);
-
+        g.addEdge(v4, v2);
+        
+        DefaultGraphCell cell = jgAdapter.getVertexCell(v1);
+        AttributeMap attr = cell.getAttributes();
+        //Rectangle2D bounds = GraphConstants.getBounds(attr);
+        GraphConstants.setBackground(attr, Color.BLUE);
+        AttributeMap cellAttr = new AttributeMap();
+        cellAttr.put(cell, attr);
+        jgAdapter.edit(cellAttr, null, null, null);
+        
         // position vertices nicely within JGraph component
-        positionVertexAt(v1, 130, 40);
-        positionVertexAt(v2, 60, 200);
-        positionVertexAt(v3, 310, 230);
-        positionVertexAt(v4, 380, 70);
-
+//        positionVertexAt(v1, 130, 40);
+//        positionVertexAt(v2, 60, 200);
+//        positionVertexAt(v3, 310, 230);
+//        positionVertexAt(v4, 380, 70);
+        JGraphLayout layout = new JGraphHierarchicalLayout();
+        JGraphFacade facade = new JGraphFacade(jgraph);
+        layout.run(facade);
+        Map nested = facade.createNestedMap(false, false);
+        jgraph.getGraphLayoutCache().edit(nested);
         // that's all there is to it!...
     }
     
@@ -139,6 +160,7 @@ public class MainApp extends javax.swing.JFrame {
                 bounds.getHeight());
 
         GraphConstants.setBounds(attr, newBounds);
+        
 
         // TODO: Clean up generics once JGraph goes generic
         AttributeMap cellAttr = new AttributeMap();

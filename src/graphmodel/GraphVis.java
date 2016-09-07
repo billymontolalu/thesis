@@ -5,6 +5,7 @@
  */
 package graphmodel;
 
+import model.Atom;
 import java.util.Set;
 import org.jgrapht.DirectedGraph;
 
@@ -21,9 +22,10 @@ public final class GraphVis {
     private static void printEdge(DirectedGraph dg){
         for(Object edge : dg.edgeSet()){
             RelationshipEdge re = (RelationshipEdge) edge;
+            
             Atom v1 = (Atom) re.getV1();
             Atom v2 = (Atom) re.getV2();
-            System.out.println("(" + v1.getLabel() + ")" + EdgeVis.METHOD + "(" + v2.getLabel() + ")");
+            System.out.println("(" + v1.getLabel() + ")" + re.getLabel() + "(" + v2.getLabel() + ")");
         }
     }
     
