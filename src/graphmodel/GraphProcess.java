@@ -5,9 +5,12 @@
  */
 package graphmodel;
 
+import model.Atom;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
+import org.jgrapht.graph.ClassBasedEdgeFactory;
+import org.jgrapht.graph.DirectedMultigraph;
 
 /**
  *
@@ -20,6 +23,77 @@ public class GraphProcess {
         this.v0 = v0;
         this.v1 = v1;
         this.v2 = v2;
+    }
+    
+    public DirectedGraph getDeleteInsert()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        
+        GraphCompare gc1 = new GraphCompare(v0, v1);
+        DirectedGraph del1 = gc1.getDelete();
+        
+        GraphCompare gc2 = new GraphCompare(v0, v2);
+        DirectedGraph edit2 = gc2.getKA();
+        
+        for(Object vertex1 : del1.vertexSet()){
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : edit2.vertexSet()){
+                Atom a2 = (Atom) vertex2;
+                if(a1.getLabel().equals(a2.getLabel())){
+                    dg.addVertex(a1);
+                }
+            }
+        }
+        
+        return dg;
+    }
+    
+    public DirectedGraph getInsertDelete()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        
+        GraphCompare gc1 = new GraphCompare(v0, v2);
+        DirectedGraph del1 = gc1.getDelete();
+        
+        GraphCompare gc2 = new GraphCompare(v0, v1);
+        DirectedGraph edit2 = gc2.getKA();
+        
+        for(Object vertex1 : del1.vertexSet()){
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : edit2.vertexSet()){
+                Atom a2 = (Atom) vertex2;
+                if(a1.getLabel().equals(a2.getLabel())){
+                    dg.addVertex(a1);
+                }
+            }
+        }
+        
+        return dg;
+    }
+    
+    public DirectedGraph getDeleteDelete()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        
+        GraphCompare gc1 = new GraphCompare(v0, v1);
+        DirectedGraph del1 = gc1.getDelete();
+        GraphCompare gc2 = new GraphCompare(v0, v2);
+        DirectedGraph del2 = gc2.getDelete();
+        
+        for(Object vertex1 : del1.vertexSet()){
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : del2.vertexSet()){
+                Atom a2 = (Atom) vertex2;
+                if(a1.getLabel().equals(a2.getLabel())){
+                    dg.addVertex(a1);
+                }
+            }
+        }
+        
+        return dg;
     }
     
     public DirectedGraph getD1()
