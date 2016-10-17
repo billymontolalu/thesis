@@ -8,7 +8,6 @@ package graphmodel;
 import model.Atom;
 import model.Relation;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -18,11 +17,35 @@ import org.jgrapht.graph.DirectedMultigraph;
  * @author Momo
  */
 public class GraphCompare {
-    DirectedGraph v1, v2;
+    private final DirectedGraph v1, v2;
     
     public GraphCompare(DirectedGraph v1, DirectedGraph v2){
         this.v1 = v1;
         this.v2 = v2;
+    }
+    
+    public DirectedGraph getAdditon()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        boolean found;
+        for(Object vertex2 : v2.vertexSet()){
+            found = false;
+            Atom a2 = (Atom) vertex2;
+            for(Object vertex1 : v1.vertexSet()){
+                Atom a1 = (Atom) vertex1;
+                
+                if(a1.getLabel().equals(a2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(vertex2);
+            }
+        }
+        return dg;
     }
     
     public DirectedGraph getEdit()
@@ -67,7 +90,7 @@ public class GraphCompare {
             if(found == false)
             {
                 Relation rel = new Relation();
-                rel.setLabel(v1_1.getLabel() + re1.getLabel() + v1_2.getLabel());
+                rel.setType(re1.getLabel());
                 rel.setSource(v1_1);
                 rel.setDestination(v1_2);
                 dg.addVertex(rel);
@@ -118,7 +141,7 @@ public class GraphCompare {
             if(found == false)
             {
                 Relation rel = new Relation();
-                rel.setLabel(v1_1.getLabel() + re1.getLabel() + v1_2.getLabel());
+                rel.setType(re1.getLabel());
                 rel.setSource(v1_1);
                 rel.setDestination(v1_2);
                 dg.addVertex(rel);
@@ -161,7 +184,7 @@ public class GraphCompare {
                 Atom v1_2 = (Atom) re1.getV2();
                 Atom v2_1 = (Atom) re2.getV1();
                 Atom v2_2 = (Atom) re2.getV2();
-                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel())){
+                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel()) && re1.getLabel().equals(re2.getLabel())){
                     dg.addVertex(v1_1);
                     dg.addVertex(v1_2);
                     dg.addEdge(v1_1, v1_2, new RelationshipEdge(v1_1, v1_2, re1.getLabel()));

@@ -1,6 +1,5 @@
 @startuml
 Circle -- Shape
-Parallelogram -- Shape
 Quadrangle -- Shape
 Square -- Quadrangle
 Rectangle -- Quadrangle

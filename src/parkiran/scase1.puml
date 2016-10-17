@@ -1,0 +1,6 @@
+@startuml
+Circle -- Shape
+Square -- Shape
+Rectangle -- Shape
+Parallelogram -- Shape
+@enduml

@@ -12,8 +12,15 @@ package model;
 public class Relation extends Atom{
     private Atom source;
     private Atom destination;
+    private String type;
+    
     public Relation()
     {
+    }
+    
+    @Override
+    public String getLabel() {
+        return source.getLabel() + "|" + type + "|" + destination.getLabel();
     }
     
     public Relation(String name)
@@ -40,4 +47,19 @@ public class Relation extends Atom{
     {
         return this.destination;
     }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

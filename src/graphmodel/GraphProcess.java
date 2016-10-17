@@ -6,8 +6,10 @@
 package graphmodel;
 
 import model.Atom;
+import model.Class;
+import model.Method;
+import model.Attribute;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
 import org.jgrapht.graph.DirectedMultigraph;
@@ -23,6 +25,36 @@ public class GraphProcess {
         this.v0 = v0;
         this.v1 = v1;
         this.v2 = v2;
+    }
+    
+    public void getSimantic()
+    {
+        //jika ada relasi yang sama maka, itu akan jadi kunci lokasi, 
+        //sedangkan relasi yang tidak sama akan dipindahkan
+        GraphCompare gc1 = new GraphCompare(v0, v1);
+        DirectedGraph dg1 = gc1.getAdditon();
+        
+        GraphCompare gc2 = new GraphCompare(v0, v2);
+        DirectedGraph dg2 = gc2.getAdditon();
+        for(Object vertex1 : dg1.vertexSet())
+        {
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : dg2.vertexSet())
+            {
+                Atom a2 = (Atom) vertex2;
+                if(a1 instanceof Class)
+                {
+                    boolean isSimiliar = Semantic.isSimiliar(a1.getLabel(), a2.getLabel());
+                    if(isSimiliar)
+                    {
+                        
+                    }
+                }
+                else if(a1 instanceof Method || a1 instanceof Attribute)
+                {
+                }
+            }
+        }
     }
     
     public DirectedGraph getDeleteInsert()
@@ -142,8 +174,105 @@ public class GraphProcess {
     
     public DirectedGraph getX()
     {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        
         DirectedGraph c1 = getC1();
-        Graphs.addGraph(c1, getC2());
-        return c1;
+        
+        DirectedGraph c2 = getC2();
+        //Graphs.addGraph(c1, c2);
+        for(Object vertex1 : c1.vertexSet()){
+            boolean found = false;
+            Atom a1 = (Atom) vertex1;
+//            if(a1 instanceof Relation)
+//            {
+//                System.out.print("ketemu");
+//                continue;
+//            }
+            for(Object vertex2 : c2.vertexSet()){
+                Atom a2 = (Atom) vertex2;
+                if(a1.getLabel().equals(a2.getLabel())){
+                    dg.addVertex(a1);
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(a1);
+            }
+        }
+        
+        for(Object vertex2 : c2.vertexSet()){
+            boolean found = false;
+            Atom a2 = (Atom) vertex2;
+//            if(a2 instanceof Relation)
+//            {
+//                System.out.print("ketemu");
+//                continue;
+//            }
+            for(Object vertex1 : c1.vertexSet()){
+                Atom a1 = (Atom) vertex1;
+                if(a1.getLabel().equals(a2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(a2);
+            }
+        }
+        
+        for(Object edge1 : c1.edgeSet()){
+            boolean found = false;
+            RelationshipEdge re1 = (RelationshipEdge) edge1;
+            for(Object edge2 : c2.edgeSet()){
+                RelationshipEdge re2 = (RelationshipEdge) edge2;
+                Atom v1_1 = (Atom) re1.getV1();
+                Atom v1_2 = (Atom) re1.getV2();
+                Atom v2_1 = (Atom) re2.getV1();
+                Atom v2_2 = (Atom) re2.getV2();
+                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel())){
+                    dg.addVertex(v1_1);
+                    dg.addVertex(v1_2);
+                    dg.addEdge(v1_1, v1_2, new RelationshipEdge(v1_1, v1_2, re1.getLabel()));
+                    found = true;
+                    break;
+                }
+            }
+            
+            if(found == false)
+            {
+                dg.addVertex(re1.getV1());
+                dg.addVertex(re1.getV2());
+                dg.addEdge(re1.getV1(), re1.getV2(), new RelationshipEdge(re1.getV1(), re1.getV2(), re1.getLabel()));
+            }
+        }
+        
+        for(Object edge2 : c2.edgeSet()){
+            boolean found = false;
+            RelationshipEdge re2 = (RelationshipEdge) edge2;
+            for(Object edge1 : c1.edgeSet()){
+                RelationshipEdge re1 = (RelationshipEdge) edge1;
+                Atom v1_1 = (Atom) re1.getV1();
+                Atom v1_2 = (Atom) re1.getV2();
+                Atom v2_1 = (Atom) re2.getV1();
+                Atom v2_2 = (Atom) re2.getV2();
+                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            
+            if(found == false)
+            {
+                dg.addVertex(re2.getV1());
+                dg.addVertex(re2.getV2());
+                dg.addEdge(re2.getV1(), re2.getV2(), new RelationshipEdge(re2.getV1(), re2.getV2(), re2.getLabel()));
+            }
+        }
+        
+        return dg;
     }
 }
