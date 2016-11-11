@@ -8,6 +8,7 @@ package graphmodel;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.impl.WuPalmer;
+import edu.cmu.lti.ws4j.impl.Path;
 import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 
 /**
@@ -16,7 +17,7 @@ import edu.cmu.lti.ws4j.util.WS4JConfiguration;
  */
 final public class Semantic {
     private static final ILexicalDatabase db = new NictWordNet();
-    private static final double threshold = 9;
+    private static final double threshold = 0.9;
     
     private static double compute(String word1, String word2) {
         WS4JConfiguration.getInstance().setMFS(true);
@@ -28,5 +29,20 @@ final public class Semantic {
     {
         double distance = compute(word1, word2);
         return distance >= threshold;
+    }
+    
+    public void compareClass(Class v0, Class v1)
+    {
+        
+    }
+    
+    public void compareMethod()
+    {
+        
+    }
+    
+    public void compareAttribute()
+    {
+        
     }
 }

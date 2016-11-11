@@ -5,10 +5,12 @@
  */
 package graphmodel;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.Atom;
 import model.Class;
-import model.Method;
-import model.Attribute;
+import model.RelatedAtom;
+import model.Relation;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
@@ -27,34 +29,49 @@ public class GraphProcess {
         this.v2 = v2;
     }
     
-    public void getSimantic()
+    public List<RelatedAtom> getSemanticNode()
     {
         //jika ada relasi yang sama maka, itu akan jadi kunci lokasi, 
         //sedangkan relasi yang tidak sama akan dipindahkan
         GraphCompare gc1 = new GraphCompare(v0, v1);
-        DirectedGraph dg1 = gc1.getAdditon();
-        
         GraphCompare gc2 = new GraphCompare(v0, v2);
-        DirectedGraph dg2 = gc2.getAdditon();
-        for(Object vertex1 : dg1.vertexSet())
+        DirectedGraph newNode1 = gc1.getNewNode();
+        DirectedGraph newNode2 = gc2.getNewNode();
+        List<RelatedAtom> related = new ArrayList();
+        for(Object node1 : newNode1.vertexSet())
         {
-            Atom a1 = (Atom) vertex1;
-            for(Object vertex2 : dg2.vertexSet())
+            if(node1 instanceof Class)
             {
-                Atom a2 = (Atom) vertex2;
-                if(a1 instanceof Class)
+                Class c1 = (Class) node1;
+                for(Object node2 : newNode2.vertexSet())
                 {
-                    boolean isSimiliar = Semantic.isSimiliar(a1.getLabel(), a2.getLabel());
-                    if(isSimiliar)
+                    Class c2 = (Class) node2;
+                    if(node2 instanceof Class)
                     {
+                        boolean issimiliar = Semantic.isSimiliar(c1.getLabel(), c2.getLabel());
+                        if(issimiliar)
+                        {
+                            RelatedAtom ra = new RelatedAtom(c1, c2);
+                            related.add(ra);
+                        }
+                        
+                        //cek apakah ada tetangga yang sama
                         
                     }
                 }
-                else if(a1 instanceof Method || a1 instanceof Attribute)
-                {
-                }
             }
         }
+        
+        return related;
+    }
+    
+    public DirectedGraph getInsertInsert()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        GraphCompare gc1 = new GraphCompare(v0, v1);
+        GraphCompare gc2 = new GraphCompare(v0, v2);
+        return null;
     }
     
     public DirectedGraph getDeleteInsert()
@@ -77,7 +94,6 @@ public class GraphProcess {
                 }
             }
         }
-        
         return dg;
     }
     
@@ -184,11 +200,6 @@ public class GraphProcess {
         for(Object vertex1 : c1.vertexSet()){
             boolean found = false;
             Atom a1 = (Atom) vertex1;
-//            if(a1 instanceof Relation)
-//            {
-//                System.out.print("ketemu");
-//                continue;
-//            }
             for(Object vertex2 : c2.vertexSet()){
                 Atom a2 = (Atom) vertex2;
                 if(a1.getLabel().equals(a2.getLabel())){
@@ -273,6 +284,220 @@ public class GraphProcess {
             }
         }
         
-        return dg;
+        return compact(dg);
+    }
+    
+    public DirectedGraph mergeSemantic()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+            new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        List<Object> visited = new ArrayList<Object>();
+        DirectedGraph x = getX();
+        setSameNeighbor(x, visited);
+        List<RelatedAtom> ra = getSemanticNode();
+        
+        Object startTravers = null;
+        for (RelatedAtom ra1 : ra)
+        {
+            startTravers = ra1.getV0();
+            treeVisit(x, startTravers, visited, dg);
+            for(Object mv : dg.vertexSet())
+            {
+                x.removeVertex(mv);
+            }
+            Graphs.addGraph(x, dg);
+            Atom moveFrom = null, moveTo = null;
+            for(Object i : x.vertexSet())
+            {
+                if(i.equals(startTravers))
+                {
+                    moveFrom = (Atom) i;
+                }
+                else if(i.equals(ra1.getV1()))
+                {
+                    moveTo = (Atom) i;
+                }
+            }
+            
+            moveTo.setLabel(moveFrom.getLabel() + "/" + moveTo.getLabel());
+            for(Object edge : x.edgesOf(moveFrom))
+            {
+                RelationshipEdge rel = (RelationshipEdge) edge;
+                if(!moveFrom.equals(rel.getV1()))
+                {
+                    x.addEdge(rel.getV1(), moveTo, new RelationshipEdge(rel.getV1(), moveTo, rel.getLabel()));
+                }
+                else if(!moveFrom.equals(rel.getV2()))
+                {
+                    x.addEdge(moveTo, rel.getV2(), new RelationshipEdge(moveTo, rel.getV2(), rel.getLabel()));
+                }
+            }
+            x.removeVertex(moveFrom);
+        }
+
+        return x;
+    }
+    
+    //todo: bikin fungsi untuk mencari node tetangga yang sama
+    void setSameNeighbor(DirectedGraph x, List<Object> visitedList)
+    {
+        List<RelatedAtom> ra = getSemanticNode();
+        for (RelatedAtom ra1 : ra)
+        {
+            for(Object object0 : x.vertexSet())
+            {
+                if(object0.equals(ra1.getV0()))
+                {
+                    for(Object edge : x.edgesOf(object0))
+                    {
+                        RelationshipEdge re = (RelationshipEdge) edge;
+                        Object neighbor = null;
+                        if(!object0.equals(re.getV1()))
+                        {
+                            neighbor = re.getV1();
+                        }else
+                        {
+                            neighbor = re.getV2();
+                        }
+                        
+                        for(Object object1 : x.vertexSet())
+                        {
+                            if(object1.equals(ra1.getV1()))
+                            {
+                                for(Object edge1 : x.edgesOf(object1))
+                                {
+                                    RelationshipEdge re1 = (RelationshipEdge) edge1;
+                                    Object neighbor1 = null;
+                                    if(!object1.equals(re1.getV1()))
+                                    {
+                                        neighbor1 = re1.getV1();
+                                    }else
+                                    {
+                                        neighbor1 = re1.getV2();
+                                    }
+                                    
+                                    if(neighbor.equals(neighbor1))
+                                    {
+                                        visitedList.add(neighbor);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    //todo: bikin fungsi untuk mecari node itu pernah dikunjungi apa tidak
+    boolean isVisited(Object current, List<Object> visitedList)
+    {
+        for (Object visited1 : visitedList) {
+            Atom v = (Atom) visited1;
+            if(v.equals(current))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void treeVisit(DirectedGraph x, Object current, List<Object> visited, DirectedGraph dg)
+    {
+        for(Object object : x.vertexSet())
+        {
+            if(object.equals(current))
+            {
+                //cek apakah pernah dikunjungi
+                boolean isVisited = isVisited(current, visited);
+                if(!isVisited){
+                    visited.add(object);
+                    dg.addVertex(object);
+                    for(Object edge : x.edgesOf(object))
+                    {
+                        RelationshipEdge re = (RelationshipEdge) edge;
+                        isVisited = isVisited(re.getV1(), visited);
+                        if(!isVisited)
+                        {
+                            dg.addVertex(re.getV1());
+                            dg.addEdge(re.getV1(), object, new RelationshipEdge(re.getV1(), object, re.getLabel()));
+                            treeVisit(x, re.getV1(), visited, dg);
+                        }
+                        
+                        isVisited = isVisited(re.getV2(), visited);
+                        if(!isVisited)
+                        {
+                            dg.addVertex(re.getV2());
+                            dg.addEdge(object, re.getV2(), new RelationshipEdge(object, re.getV2(), re.getLabel()));
+                            treeVisit(x, re.getV2(), visited, dg);
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    DirectedGraph compact(DirectedGraph dg)
+    {
+        DirectedGraph normalisasi = new DirectedMultigraph<>(
+            new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        
+        for(Object v : dg.vertexSet())
+        {
+            if(v instanceof Relation)
+            {
+                Relation r = (Relation) v;
+                Object src = searchOnVertex(normalisasi, r.getSource());
+                if(src == null)
+                {
+                    normalisasi.addVertex(src);
+                }
+                
+                Object dst = searchOnVertex(normalisasi, r.getDestination());
+                if(dst == null)
+                {
+                    normalisasi.addVertex(dst);
+                }
+                
+                normalisasi.addEdge(src, dst, new RelationshipEdge(src, dst, r.getType()));
+            }
+            else
+            {
+                if(searchOnVertex(normalisasi, v) == null)
+                {
+                    normalisasi.addVertex(v);
+                }
+            }
+        }
+        
+        for(Object e: dg.edgeSet())
+        {
+            RelationshipEdge re = (RelationshipEdge) e;
+            if(searchOnVertex(dg, re.getV1()) == null)
+            {
+                normalisasi.addVertex(re.getV1());
+            }
+            
+            if(searchOnVertex(dg, re.getV2()) == null)
+            {
+                normalisasi.addVertex(re.getV2());
+            }
+            normalisasi.addEdge(re.getV1(), re.getV2(), new RelationshipEdge(re.getV1(), re.getV2(), re.getLabel()));
+        }
+        return normalisasi;
+    }
+    
+    Object searchOnVertex(DirectedGraph dg, Object keyword)
+    {
+        for(Object v:dg.vertexSet())
+        {
+            Atom a = (Atom) v;
+            if(a.equals(keyword))
+            {
+                return v;
+            }
+        }
+        return null;
     }
 }

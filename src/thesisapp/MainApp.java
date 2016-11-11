@@ -11,10 +11,19 @@ import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.mxOrganicLayout;
 import graphmodel.RelationshipEdge;
+import japa.parser.JavaParser;
+import japa.parser.ParseException;
+import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.visitor.VoidVisitorAdapter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JApplet;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -98,6 +107,9 @@ public class MainApp extends javax.swing.JFrame {
         ListenableGraph<String, DefaultEdge> g =
             new ListenableDirectedMultigraph<String, DefaultEdge>(
                 DefaultEdge.class);
+        
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
 
         // create a visualization using JGraph, via an adapter
         jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(g);
@@ -118,6 +130,7 @@ public class MainApp extends javax.swing.JFrame {
         g.addVertex(v2);
         g.addVertex(v3);
         g.addVertex(v4);
+        
 
         g.addEdge(v1, v2);
         g.addEdge(v2, v3);
@@ -125,13 +138,20 @@ public class MainApp extends javax.swing.JFrame {
         g.addEdge(v4, v3);
         g.addEdge(v4, v2);
         
+        DefaultGraphCell x = jgAdapter.getEdgeCell(g.getEdge(v1, v2));
+        AttributeMap attrbute = x.getAttributes();
+        GraphConstants.setLineColor(attrbute, Color.RED);
+        GraphConstants.setLineEnd(attrbute, GraphConstants.ARROW_CIRCLE);
+        
         DefaultGraphCell cell = jgAdapter.getVertexCell(v1);
         AttributeMap attr = cell.getAttributes();
         //Rectangle2D bounds = GraphConstants.getBounds(attr);
         GraphConstants.setBackground(attr, Color.BLUE);
+        
         AttributeMap cellAttr = new AttributeMap();
         cellAttr.put(cell, attr);
         jgAdapter.edit(cellAttr, null, null, null);
+        
         
         // position vertices nicely within JGraph component
 //        positionVertexAt(v1, 130, 40);
@@ -146,7 +166,7 @@ public class MainApp extends javax.swing.JFrame {
         // that's all there is to it!...
     }
     
-    private void positionVertexAt(Object vertex, int x, int y)
+    private void positionVertexAtx(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = jgAdapter.getVertexCell(vertex);
         AttributeMap attr = cell.getAttributes();
@@ -160,7 +180,6 @@ public class MainApp extends javax.swing.JFrame {
                 bounds.getHeight());
 
         GraphConstants.setBounds(attr, newBounds);
-        
 
         // TODO: Clean up generics once JGraph goes generic
         AttributeMap cellAttr = new AttributeMap();
@@ -182,6 +201,7 @@ public class MainApp extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,6 +212,14 @@ public class MainApp extends javax.swing.JFrame {
 
         jMenuItem1.setText("Parkiran");
         jMenu4.add(jMenuItem1);
+
+        jMenuItem2.setText("AST");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem2);
 
         jMenuBar2.add(jMenu4);
 
@@ -211,6 +239,15 @@ public class MainApp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    
+    //use ASTParse to parse string
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -251,5 +288,6 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

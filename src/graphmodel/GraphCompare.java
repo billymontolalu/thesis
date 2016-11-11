@@ -29,10 +29,10 @@ public class GraphCompare {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         boolean found;
-        for(Object vertex2 : v2.vertexSet()){
+        for(Object vertex2 : getV2().vertexSet()){
             found = false;
             Atom a2 = (Atom) vertex2;
-            for(Object vertex1 : v1.vertexSet()){
+            for(Object vertex1 : getV1().vertexSet()){
                 Atom a1 = (Atom) vertex1;
                 
                 if(a1.getLabel().equals(a2.getLabel())){
@@ -45,6 +45,31 @@ public class GraphCompare {
                 dg.addVertex(vertex2);
             }
         }
+        
+        for(Object edge2 : getV2().edgeSet())
+        {
+            found = false;
+            RelationshipEdge re2 = (RelationshipEdge) edge2;
+            Atom v2_1 = (Atom) re2.getV1();
+            Atom v2_2 = (Atom) re2.getV2();
+            for(Object edge1 : getV1().edgeSet()){
+                RelationshipEdge re1 = (RelationshipEdge) edge1;
+                Atom v1_1 = (Atom) re1.getV1();
+                Atom v1_2 = (Atom) re1.getV2();
+                if(v1_1.getLabel().equals(v2_1.getLabel()) && v1_2.getLabel().equals(v2_2.getLabel()) && re1.getLabel().equals(re2.getLabel())){
+                    found = true;
+                    break;
+                }
+            }
+            if(found == false)
+            {
+                Relation r = new Relation();
+                r.setSource(v2_1);
+                r.setDestination(v2_2);
+                r.setType(re2.getLabel());
+                dg.addVertex(r);
+            }
+        }
         return dg;
     }
     
@@ -54,10 +79,10 @@ public class GraphCompare {
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         //mencari node yang didelete
         boolean found;
-        for(Object vertex1 : v1.vertexSet()){
+        for(Object vertex1 : getV1().vertexSet()){
             found = false;
             Atom a1 = (Atom) vertex1;
-            for(Object vertex2 : v2.vertexSet()){
+            for(Object vertex2 : getV2().vertexSet()){
                 Atom a2 = (Atom) vertex2;
                 
                 if(a1.getLabel().equals(a2.getLabel())){
@@ -71,13 +96,13 @@ public class GraphCompare {
             }
         }
         //mencari relasi yang didelete
-        for(Object edge1 : v1.edgeSet())
+        for(Object edge1 : getV1().edgeSet())
         {
             found = false;
             RelationshipEdge re1 = (RelationshipEdge) edge1;
             Atom v1_1 = (Atom) re1.getV1();
             Atom v1_2 = (Atom) re1.getV2();
-            for(Object edge2 : v2.edgeSet()){
+            for(Object edge2 : getV2().edgeSet()){
                 RelationshipEdge re2 = (RelationshipEdge) edge2;
                 
                 Atom v2_1 = (Atom) re2.getV1();
@@ -105,10 +130,10 @@ public class GraphCompare {
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         //mencari node yang didelete
         boolean found;
-        for(Object vertex1 : v1.vertexSet()){
+        for(Object vertex1 : getV1().vertexSet()){
             found = false;
             Atom a1 = (Atom) vertex1;
-            for(Object vertex2 : v2.vertexSet()){
+            for(Object vertex2 : getV2().vertexSet()){
                 Atom a2 = (Atom) vertex2;
                 
                 if(a1.getLabel().equals(a2.getLabel())){
@@ -122,13 +147,13 @@ public class GraphCompare {
             }
         }
         //mencari relasi yang didelete
-        for(Object edge1 : v1.edgeSet())
+        for(Object edge1 : getV1().edgeSet())
         {
             found = false;
             RelationshipEdge re1 = (RelationshipEdge) edge1;
             Atom v1_1 = (Atom) re1.getV1();
             Atom v1_2 = (Atom) re1.getV2();
-            for(Object edge2 : v2.edgeSet()){
+            for(Object edge2 : getV2().edgeSet()){
                 RelationshipEdge re2 = (RelationshipEdge) edge2;
                 
                 Atom v2_1 = (Atom) re2.getV1();
@@ -161,9 +186,9 @@ public class GraphCompare {
     DirectedGraph getSameNoEdge(){
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
-        for(Object vertex1 : v1.vertexSet()){
+        for(Object vertex1 : getV1().vertexSet()){
             Atom a1 = (Atom) vertex1;
-            for(Object vertex2 : v2.vertexSet()){
+            for(Object vertex2 : getV2().vertexSet()){
                 Atom a2 = (Atom) vertex2;
                 if(a1.getLabel().equals(a2.getLabel())){
                     dg.addVertex(a1);
@@ -176,9 +201,9 @@ public class GraphCompare {
     DirectedGraph getSameEdge(){
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
-        for(Object edge1 : v1.edgeSet()){
+        for(Object edge1 : getV1().edgeSet()){
             RelationshipEdge re1 = (RelationshipEdge) edge1;
-            for(Object edge2 : v2.edgeSet()){
+            for(Object edge2 : getV2().edgeSet()){
                 RelationshipEdge re2 = (RelationshipEdge) edge2;
                 Atom v1_1 = (Atom) re1.getV1();
                 Atom v1_2 = (Atom) re1.getV2();
@@ -199,10 +224,10 @@ public class GraphCompare {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         boolean find;
-        for(Object edge1 : v1.edgeSet()){
+        for(Object edge1 : getV1().edgeSet()){
             find = false;
             RelationshipEdge re1 = (RelationshipEdge) edge1;
-            for(Object edge2 : v2.edgeSet()){
+            for(Object edge2 : getV2().edgeSet()){
                 RelationshipEdge re2 = (RelationshipEdge) edge2;
                 Atom v1_1 = (Atom) re1.getV1();
                 Atom v1_2 = (Atom) re1.getV2();
@@ -226,13 +251,13 @@ public class GraphCompare {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         DirectedGraph del = getUnchange();
-        for(Object edge2 : v2.edgeSet()){
+        for(Object edge2 : getV2().edgeSet()){
             find = false;
             RelationshipEdge re2 = (RelationshipEdge) edge2;
+            Atom v2_1 = (Atom) re2.getV1();
+            Atom v2_2 = (Atom) re2.getV2();
             for(Object edgeDel : del.edgeSet()){
-                RelationshipEdge reDel = (RelationshipEdge) edgeDel;
-                Atom v2_1 = (Atom) re2.getV1();
-                Atom v2_2 = (Atom) re2.getV2();
+                RelationshipEdge reDel = (RelationshipEdge) edgeDel;    
                 Atom vdel_1 = (Atom) reDel.getV1();
                 Atom vdel_2 = (Atom) reDel.getV2();
                 if(v2_1.getLabel().equals(vdel_1.getLabel()) && v2_2.getLabel().equals(vdel_2.getLabel())){
@@ -241,8 +266,8 @@ public class GraphCompare {
                 }
             }
             if(find == false){
-                dg.addVertex(re2.getV1());
-                dg.addVertex(re2.getV2());
+                dg.addVertex(v2_1);
+                dg.addVertex(v2_2);
             }
         }
         return dg;
@@ -253,7 +278,7 @@ public class GraphCompare {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         DirectedGraph B1 = getB1();
-        for(Object edge1 : v1.edgeSet()){
+        for(Object edge1 : getV1().edgeSet()){
             node1 = false;
             node2 = false;
             RelationshipEdge re1 = (RelationshipEdge) edge1;
@@ -283,7 +308,7 @@ public class GraphCompare {
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         DirectedGraph B2 = getB2();
-        for(Object edge2 : v2.edgeSet()){
+        for(Object edge2 : getV2().edgeSet()){
             node1 = false;
             node2 = false;
             RelationshipEdge re2 = (RelationshipEdge) edge2;
@@ -303,7 +328,6 @@ public class GraphCompare {
                 dg.addVertex(a2);
                 dg.addEdge(a1, a2, new RelationshipEdge(a1, a2, re2.getLabel()));
             }
-            
         }
         return dg;
     }
@@ -327,5 +351,61 @@ public class GraphCompare {
         DirectedGraph l1 = getL1();
         Graphs.addGraph(ka, l1);
         return ka;
+    }
+    
+    public DirectedGraph getNewNode()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        boolean found = false;
+        for(Object vertex2 : getV2().vertexSet())
+        {
+            found = false;
+            Atom a2 = (Atom) vertex2;
+            for(Object vertex1 : getV1().vertexSet())
+            {
+                Atom a1 = (Atom) vertex1;
+                if(a2.getLabel().equals(a1.getLabel()))
+                {
+                    found = true;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(a2);
+            }
+        }
+        for(Object vertex1 : getV1().vertexSet())
+        {
+            found = false;
+            Atom a1 = (Atom) vertex1;
+            for(Object vertex2 : getV2().vertexSet())
+            {
+                Atom a2 = (Atom) vertex2;
+                if(a2.getLabel().equals(a1.getLabel()))
+                {
+                    found = true;
+                }
+            }
+            if(found == false)
+            {
+                dg.addVertex(a1);
+            }
+        }
+        return dg;
+    }
+
+    /**
+     * @return the v1
+     */
+    public DirectedGraph getV1() {
+        return v1;
+    }
+
+    /**
+     * @return the v2
+     */
+    public DirectedGraph getV2() {
+        return v2;
     }
 }

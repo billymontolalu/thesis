@@ -18,4 +18,17 @@ public class Attribute extends Atom {
     {
         this.setLabel(attributeName);
     }
+    
+    @Override
+    public boolean equals(Object otherObject){
+        if(otherObject instanceof Attribute)
+        {
+            Attribute c = (Attribute) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return true;
+            }
+        }
+        return false; 
+    }
 }

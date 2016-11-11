@@ -1,0 +1,146 @@
+@startuml
+annotation java.lang.Override
+class com.graphmodel.Atom
+class com.graphmodel.Compare
+class com.graphmodel.DataToGraph
+class com.graphmodel.EdgeVis
+class com.graphmodel.GraphCompare
+class com.graphmodel.GraphVis
+class com.graphmodel.RelationshipEdge
+class com.model.Attribute
+class com.model.Class
+class com.model.ClassDiagram
+class com.model.Method
+class com.model.Parameter
+class edu.cmu.lti.lexical_db.ILexicalDatabase
+class edu.cmu.lti.lexical_db.NictWordNet
+class edu.cmu.lti.ws4j.impl.WuPalmer
+class edu.cmu.lti.ws4j.util.WS4JConfiguration
+class japa.parser.JavaParser
+class japa.parser.ParseException
+class japa.parser.ast.CompilationUnit
+class japa.parser.ast.PackageDeclaration
+class japa.parser.ast.body.BodyDeclaration
+class japa.parser.ast.body.ClassOrInterfaceDeclaration
+class japa.parser.ast.body.FieldDeclaration
+class japa.parser.ast.body.MethodDeclaration
+class japa.parser.ast.body.Parameter
+class japa.parser.ast.body.TypeDeclaration
+class japa.parser.ast.body.VariableDeclarator
+class japa.parser.ast.visitor.VoidVisitorAdapter
+class java.io.FileInputStream
+class java.io.FileNotFoundException
+class java.io.IOException
+class java.util.ArrayList
+class java.util.List
+class java.util.Set
+class java.util.logging.Level
+class java.util.logging.Logger
+class org.jgrapht.DirectedGraph
+class org.jgrapht.Graphs
+class org.jgrapht.graph.ClassBasedEdgeFactory
+class org.jgrapht.graph.DefaultEdge
+class org.jgrapht.graph.DirectedMultigraph
+class testapp.Case1
+class testapp.Case2
+class testapp.GraphTest
+class testapp.Test1V1
+class testapp.Wordnet
+class thesis.FileToData
+class thesis.Thesis
+com.graphmodel.Compare ..> com.model.Attribute
+com.graphmodel.Compare ..> com.model.Class
+com.graphmodel.Compare ..> com.model.Method
+com.graphmodel.Compare ..> java.util.Set
+com.graphmodel.Compare ..> org.jgrapht.DirectedGraph
+com.graphmodel.Compare ..> org.jgrapht.graph.ClassBasedEdgeFactory
+com.graphmodel.Compare ..> org.jgrapht.graph.DirectedMultigraph
+com.graphmodel.DataToGraph ..> com.model.Attribute
+com.graphmodel.DataToGraph ..> com.model.Class
+com.graphmodel.DataToGraph ..> com.model.Method
+com.graphmodel.DataToGraph ..> java.util.List
+com.graphmodel.DataToGraph ..> java.util.Set
+com.graphmodel.DataToGraph ..> org.jgrapht.DirectedGraph
+com.graphmodel.GraphCompare ..> org.jgrapht.DirectedGraph
+com.graphmodel.GraphCompare ..> org.jgrapht.Graphs
+com.graphmodel.GraphCompare ..> org.jgrapht.graph.ClassBasedEdgeFactory
+com.graphmodel.GraphCompare ..> org.jgrapht.graph.DirectedMultigraph
+com.graphmodel.GraphVis ..> java.util.Set
+com.graphmodel.GraphVis ..> org.jgrapht.DirectedGraph
+com.graphmodel.RelationshipEdge ..> java.lang.Override
+com.graphmodel.RelationshipEdge --|> org.jgrapht.graph.DefaultEdge
+com.model.Class ..> java.util.List
+com.model.ClassDiagram ..> java.util.List
+com.model.Method ..> java.util.List
+testapp.Case1 ..> com.graphmodel.Atom
+testapp.Case1 ..> com.graphmodel.EdgeVis
+testapp.Case1 ..> com.graphmodel.GraphCompare
+testapp.Case1 ..> com.graphmodel.GraphVis
+testapp.Case1 ..> com.graphmodel.RelationshipEdge
+testapp.Case1 ..> org.jgrapht.DirectedGraph
+testapp.Case1 ..> org.jgrapht.graph.ClassBasedEdgeFactory
+testapp.Case1 ..> org.jgrapht.graph.DirectedMultigraph
+testapp.Case2 ..> com.graphmodel.Atom
+testapp.Case2 ..> com.graphmodel.EdgeVis
+testapp.Case2 ..> com.graphmodel.GraphCompare
+testapp.Case2 ..> com.graphmodel.GraphVis
+testapp.Case2 ..> com.graphmodel.RelationshipEdge
+testapp.Case2 ..> org.jgrapht.DirectedGraph
+testapp.Case2 ..> org.jgrapht.graph.ClassBasedEdgeFactory
+testapp.Case2 ..> org.jgrapht.graph.DirectedMultigraph
+testapp.GraphTest ..> java.util.ArrayList
+testapp.GraphTest ..> org.jgrapht.DirectedGraph
+testapp.GraphTest ..> org.jgrapht.graph.ClassBasedEdgeFactory
+testapp.GraphTest ..> org.jgrapht.graph.DefaultEdge
+testapp.GraphTest ..> org.jgrapht.graph.DirectedMultigraph
+testapp.Test1V1 ..> com.graphmodel.Compare
+testapp.Test1V1 ..> com.graphmodel.DataToGraph
+testapp.Test1V1 ..> com.graphmodel.RelationshipEdge
+testapp.Test1V1 ..> com.model.Attribute
+testapp.Test1V1 ..> com.model.Class
+testapp.Test1V1 ..> com.model.Method
+testapp.Test1V1 ..> java.util.ArrayList
+testapp.Test1V1 ..> java.util.List
+testapp.Test1V1 ..> org.jgrapht.DirectedGraph
+testapp.Test1V1 ..> org.jgrapht.graph.ClassBasedEdgeFactory
+testapp.Test1V1 ..> org.jgrapht.graph.DirectedMultigraph
+testapp.Wordnet ..> edu.cmu.lti.lexical_db.ILexicalDatabase
+testapp.Wordnet ..> edu.cmu.lti.lexical_db.NictWordNet
+testapp.Wordnet ..> edu.cmu.lti.ws4j.impl.WuPalmer
+testapp.Wordnet ..> edu.cmu.lti.ws4j.util.WS4JConfiguration
+thesis.FileToData ..> java.lang.Override
+thesis.FileToData ..> com.model.Class
+thesis.FileToData ..> japa.parser.JavaParser
+thesis.FileToData ..> japa.parser.ParseException
+thesis.FileToData ..> japa.parser.ast.CompilationUnit
+thesis.FileToData ..> japa.parser.ast.PackageDeclaration
+thesis.FileToData ..> japa.parser.ast.body.BodyDeclaration
+thesis.FileToData ..> japa.parser.ast.body.ClassOrInterfaceDeclaration
+thesis.FileToData ..> japa.parser.ast.body.MethodDeclaration
+thesis.FileToData ..> japa.parser.ast.body.Parameter
+thesis.FileToData ..> japa.parser.ast.visitor.VoidVisitorAdapter
+thesis.FileToData ..> java.io.FileInputStream
+thesis.FileToData ..> java.io.FileNotFoundException
+thesis.FileToData ..> java.util.List
+thesis.FileToData ..> java.util.logging.Level
+thesis.FileToData ..> java.util.logging.Logger
+thesis.Thesis ..> java.lang.Override
+thesis.Thesis ..> japa.parser.JavaParser
+thesis.Thesis ..> japa.parser.ParseException
+thesis.Thesis ..> japa.parser.ast.CompilationUnit
+thesis.Thesis ..> japa.parser.ast.PackageDeclaration
+thesis.Thesis ..> japa.parser.ast.body.BodyDeclaration
+thesis.Thesis ..> japa.parser.ast.body.ClassOrInterfaceDeclaration
+thesis.Thesis ..> japa.parser.ast.body.FieldDeclaration
+thesis.Thesis ..> japa.parser.ast.body.MethodDeclaration
+thesis.Thesis ..> japa.parser.ast.body.Parameter
+thesis.Thesis ..> japa.parser.ast.body.TypeDeclaration
+thesis.Thesis ..> japa.parser.ast.body.VariableDeclarator
+thesis.Thesis ..> japa.parser.ast.visitor.VoidVisitorAdapter
+thesis.Thesis ..> java.io.FileInputStream
+thesis.Thesis ..> java.io.FileNotFoundException
+thesis.Thesis ..> java.io.IOException
+thesis.Thesis ..> java.util.List
+thesis.Thesis ..> java.util.logging.Level
+thesis.Thesis ..> java.util.logging.Logger
+@enduml

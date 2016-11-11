@@ -1,7 +1,26 @@
 @startuml
-Circle -- Shape
-Parallelogram -- Shape
-Quadrangle -- Shape
-Square -- Quadrangle
-Rectangle -- Quadrangle
+Vehicle *..> number
+Vehicle *..> owner
+Vehicle *--> getID
+Vehicle *--> getOwner
+Vehicle -- ControlSystem
+ControlSystem *--> calculatePayment
+ControlSystem *--> calculateTime
+Camera *..> ip
+Camera *--> getPicture
+Camera *--> getLicenseNumber
+ControlSystem *--> printInvoice
+ControlSystem *--> getPaid
+ControlSystem *--> setPaid
+ControlSystem *--> getPrice
+Ticket *..> no
+Ticket *--> print
+Ticket *--> getBarcode
+Gate *..> status
+Gate *--> openGate
+Gate *--> closeGate
+Gate *--> getStatus
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
 @enduml

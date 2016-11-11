@@ -23,7 +23,7 @@ import org.jgrapht.graph.DirectedMultigraph;
  */
 public class Dataset {
     List<Class> classList = new ArrayList();
-    private DirectedGraph<Object, RelationshipEdge> graph;
+    private final DirectedGraph<Object, RelationshipEdge> graph;
     
     public Dataset()
     {
@@ -103,8 +103,8 @@ public class Dataset {
                     case "":
                         break;
                     default:
-                        String split[] = sCurrentLine.split(" ");
-                        if(split.length == 3)
+                        String split[] = sCurrentLine.split(":");
+                        if(split.length >= 2)
                         {
                             String class_name = split[0].trim();
                             Class find = find(class_name);
@@ -112,54 +112,36 @@ public class Dataset {
                             {
                                 addClass(class_name);
                             }
-                            if(split[1].trim().equals(":")){
-                                String dataType = "", method = "", attribut = "";
-                                String non_class = split[1].trim();
-                                String non_class_split[] = non_class.split(" ");
-                                if(non_class_split.length == 2)
-                                {
-                                    dataType = non_class_split[0].trim();
-                                    if(non_class_split[1].trim().contains("()"))
-                                    {
-                                        method = non_class_split[1].trim();
-                                        method = method.replace("()", "");
-                                        addMethod(class_name, method);
-                                    }else
-                                    {
-                                        attribut = non_class_split[1].trim();
-                                        addAttribut(class_name, attribut);
-                                    }
-                                }else
-                                {
-                                    if(non_class_split[0].trim().contains("()"))
-                                    {
-                                        method = non_class_split[0].trim();
-                                        method = method.replace("()", "");
-                                        addMethod(class_name, method);
-                                    }else
-                                    {
-                                        attribut = non_class_split[0].trim();
-                                        addAttribut(class_name, attribut);
-                                    }
-                                }
-                                if(dataType.equals(""))
-                                {
-                                    //System.out.println(attribut + method);
-                                }
-                                else
-                                {
-                                    //System.out.println(dataType + " " + attribut + method);
-                                }
+                            //cek apakah dia method
+                            if(split[1].contains("()"))
+                            {
+                                String method = SyntaxString.removeSyntax(split[1].trim()).trim();
+                                addMethod(class_name, method);
                             }else
                             {
-                                String class_name2 = split[2].trim();
-                                Class find2 = find(class_name2);
-                                if(find2 == null)
-                                {
-                                    addClass(class_name2);
-                                }
-                                addRelation(split[1].trim(), class_name, class_name2);
+                                String atribut = SyntaxString.removeSyntax(split[1].trim()).trim();
+                                addAttribut(class_name, atribut);
                             }
+                            
+                            //cek apakah dia attribut
+                        }
+                        else
+                        {
+                            String split_space[] = sCurrentLine.split(" ");
+                            String class_name = split_space[0].trim();
+                            Class find = find(class_name);
+                            if(find == null)
+                            {
+                                addClass(class_name);
+                            }
+                            String class_name2 = split_space[2].trim();
+                            
+                            Class find2 = find(class_name2);
+                            if(find2 == null)
+                            {
+                                addClass(class_name2);
+                            }
+                            addRelation(split_space[1].trim(), class_name, class_name2);
                         }
                         //System.out.println(sCurrentLine);
                         break;

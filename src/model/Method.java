@@ -14,4 +14,17 @@ public class Method extends Atom{
     {
         this.setLabel(methodName);
     }
+    
+    @Override
+    public boolean equals(Object otherObject){
+        if(otherObject instanceof Method)
+        {
+            Method c = (Method) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return true;
+            }
+        }
+        return false; 
+    }
 }

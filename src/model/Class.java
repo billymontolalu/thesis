@@ -17,5 +17,18 @@ public class Class extends Atom {
     public Class(String className){
         this.setLabel(className);
     }
+    
+    @Override
+    public boolean equals(Object otherObject){
+        if(otherObject instanceof Class)
+        {
+            Class c = (Class) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return true;
+            }
+        }
+        return false; 
+    }
 
 }
