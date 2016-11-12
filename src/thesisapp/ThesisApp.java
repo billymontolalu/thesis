@@ -42,9 +42,9 @@ public class ThesisApp {
         //DirectedGraph la = gc.getDelete();
         //gp.getC1();
         //GraphVis.print(gc2.getNewNode());
-        //GraphVis.print(gp.mergeSemantic());
+        GraphVis.print(gp.mergeSemantic());
         //GraphVis.print(gp.getC2());
-        GraphVis.print(gp.getX());
+        //GraphVis.print(gp.getX());
         
         //GraphVis.print(gc1.getUnchange());
         //GraphVis.print(gc1.getR1());

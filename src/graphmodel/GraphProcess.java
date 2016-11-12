@@ -45,10 +45,11 @@ public class GraphProcess {
                 Class c1 = (Class) node1;
                 for(Object node2 : newNode2.vertexSet())
                 {
-                    Class c2 = (Class) node2;
+                    
                     if(node2 instanceof Class)
                     {
-                        boolean issimiliar = Semantic.isSimiliar(c1.getLabel(), c2.getLabel());
+                        Class c2 = (Class) node2;
+                        boolean issimiliar = new Semantic().isSimiliar(c1.getLabel(), c2.getLabel());
                         if(issimiliar)
                         {
                             RelatedAtom ra = new RelatedAtom(c1, c2);

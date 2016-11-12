@@ -8,7 +8,6 @@ package graphmodel;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.impl.WuPalmer;
-import edu.cmu.lti.ws4j.impl.Path;
 import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 
 /**
@@ -18,6 +17,14 @@ import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 final public class Semantic {
     private static final ILexicalDatabase db = new NictWordNet();
     private static final double threshold = 0.9;
+    
+    /*private static void splitCamelcase()
+    {
+        for (String w : "camelValue".split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"))
+        {
+            System.out.println(w);
+        }
+    }*/
     
     private static double compute(String word1, String word2) {
         WS4JConfiguration.getInstance().setMFS(true);

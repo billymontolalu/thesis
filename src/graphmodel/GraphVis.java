@@ -7,7 +7,10 @@ package graphmodel;
 
 import model.Atom;
 import java.util.Set;
+import model.Attribute;
 import org.jgrapht.DirectedGraph;
+import model.Class;
+import model.Method;
 
 /**
  *
@@ -26,7 +29,25 @@ public final class GraphVis {
             
             Atom v1 = (Atom) re.getV1();
             Atom v2 = (Atom) re.getV2();
-            System.out.println(v1.getLabel() + " " + re.getLabel() + " " + v2.getLabel());
+            if(v1 instanceof Class && v2 instanceof Method)
+            {
+                System.out.println(v1.getLabel() + " : " + v2.getLabel() + "()");
+            }else if(v2 instanceof Class && v1 instanceof Method)
+            {
+                System.out.println(v2.getLabel() + " : " + v1.getLabel() + "()");
+            }
+            else if(v2 instanceof Attribute && v1 instanceof Class)
+            {
+                System.out.println(v1.getLabel() + " : " + v2.getLabel());
+            }
+            else if(v1 instanceof Attribute && v2 instanceof Class)
+            {
+                System.out.println(v2.getLabel() + " : " + v1.getLabel());
+            }else
+            {
+                System.out.println(v1.getLabel() + " " + re.getLabel() + " " + v2.getLabel());
+            }
+            
         }
     }
     
