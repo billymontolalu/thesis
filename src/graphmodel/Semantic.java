@@ -14,25 +14,28 @@ import edu.cmu.lti.ws4j.util.WS4JConfiguration;
  *
  * @author Momo
  */
-final public class Semantic {
+public class Semantic {
     private static final ILexicalDatabase db = new NictWordNet();
     private static final double threshold = 0.9;
     
-    /*private static void splitCamelcase()
+    private String splitCamelcase(String word)
     {
-        for (String w : "camelValue".split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"))
+        for (String w : word.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"))
         {
-            System.out.println(w);
+            return w;
         }
-    }*/
+        return "";
+    }
     
-    private static double compute(String word1, String word2) {
+    private double compute(String word1, String word2) {
+        word1 = splitCamelcase(word1);
+        word2 = splitCamelcase(word2);
         WS4JConfiguration.getInstance().setMFS(true);
         double s = new WuPalmer(db).calcRelatednessOfWords(word1, word2);
         return s;
     }
     
-    public static boolean isSimiliar(String word1, String word2)
+    public boolean isSimiliar(String word1, String word2)
     {
         double distance = compute(word1, word2);
         return distance >= threshold;

@@ -28,13 +28,13 @@ public class ThesisApp {
     public static void main(String[] args) {
         // TODO code application logic here
         Dataset app0 = new Dataset();
-        app0.readFile("case10.puml");
+        app0.readFile("g.puml");
         
         Dataset app1 = new Dataset();
-        app1.readFile("case11.puml");
+        app1.readFile("b.puml");
         
         Dataset app2 = new Dataset();
-        app2.readFile("case12.puml");
+        app2.readFile("c.puml");
         
         GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
         GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
@@ -42,9 +42,9 @@ public class ThesisApp {
         //DirectedGraph la = gc.getDelete();
         //gp.getC1();
         //GraphVis.print(gc2.getNewNode());
-        GraphVis.print(gp.mergeSemantic());
+        //GraphVis.print(gp.mergeSemantic());
         //GraphVis.print(gp.getC2());
-        //GraphVis.print(gp.getX());
+        GraphVis.print(gp.getX());
         
         //GraphVis.print(gc1.getUnchange());
         //GraphVis.print(gc1.getR1());

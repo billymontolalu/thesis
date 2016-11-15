@@ -1,26 +1,8 @@
 @startuml
-Vehicle : number
-Vehicle : owner
-Vehicle : getID()
-Vehicle : getOwner()
-Vehicle -- ControlSystem
-ControlSystem : calculatePayment()
-ControlSystem : calculateTime()
-Camera : ip
-Camera : getPicture()
-Camera : getLicenseNumber()
-ControlSystem : printInvoice()
-ControlSystem : getPaid()
-ControlSystem : setPaid()
-ControlSystem : getPrice()
-Ticket : no
-Ticket : print()
-Ticket : getBarcode()
-Gate : status
-Gate : openGate()
-Gate : closeGate()
-Gate : getStatus()
-Camera -- ControlSystem
-Gate -- ControlSystem
-Ticket -- ControlSystem
+s2 -- s5
+s5 -- s0
+s1 -- s0
+s1 -- s2
+s2 -- s0
+s4 -- s1
 @enduml
