@@ -5,8 +5,12 @@
  */
 package thesisapp;
 
+import graphmodel.GraphProcess;
 import java.util.Vector;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import model.Dataset;
 
 /**
  *
@@ -19,29 +23,44 @@ public class MainApp extends javax.swing.JFrame {
      */
     public MainApp() {
         initComponents();
+
+        getResult();
+    }
+    
+    private void getResult()
+    {
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-
-        Vector<Object> row = new Vector<Object>();
-        row.add( "Marie");
-        row.add( "Female");
-        row.add( 33);
-        data.add(row);
-
-        Vector<Object> otherRow = new Vector<Object>();
-        otherRow.add( "John");
-        otherRow.add( "Male");
-        otherRow.add( 32 );
-        data.add(otherRow);
-
         Vector<String> headers = new Vector<String>();
-        headers.add("Name");
-        headers.add("Gender");
-        headers.add( "Age");
-        jTable1 = new javax.swing.JTable( data, headers );
+        headers.add(" ");
+        for (int x = 1; x < 5; x++)
+        {
+            headers.add(Integer.toString(x));
+        }
         
-        DefaultTableModel model= new DefaultTableModel();
-        jTable1.setModel(model);
-        model.addRow(new Object[]{"x","d","a", "xx"});
+        for (int x = 1; x < 5; x++) {
+            Vector<Object> row = new Vector<Object>();
+            row.add(Integer.toString(x));
+            for (int y = 1; y < 5; y++) {
+                Dataset app0 = new Dataset();
+                app0.readFile("case10.puml");
+
+                Dataset app1 = new Dataset();
+                app1.readFile("case1" + x + ".puml");
+
+                Dataset app2 = new Dataset();
+                app2.readFile("case1" + y + ".puml");
+
+                GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+                System.out.print(" " + gp.countDeleteDelete());
+                row.add(gp.countDeleteDelete());
+                    //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
+                //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
+            }
+            data.add(row);
+        }
+        
+        JTable table = new JTable( data, headers );
+        jScrollPane2.getViewport().add(table);
     }
 
     /**
@@ -53,23 +72,9 @@ public class MainApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,15 +82,15 @@ public class MainApp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -127,7 +132,6 @@ public class MainApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
