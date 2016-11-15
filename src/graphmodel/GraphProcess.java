@@ -55,9 +55,7 @@ public class GraphProcess {
                             RelatedAtom ra = new RelatedAtom(c1, c2);
                             related.add(ra);
                         }
-                        
                         //cek apakah ada tetangga yang sama
-                        
                     }
                 }
             }
@@ -143,6 +141,50 @@ public class GraphProcess {
         }
         
         return dg;
+    }
+    
+    public int countDeleteDelete()
+    {
+        DirectedGraph dg = getDeleteDelete();
+        int count = 0;
+        for(Object x : dg.vertexSet())
+        {
+            count ++;
+        }
+        return count;
+    }
+    
+    public int countInsertInsert()
+    {
+        DirectedGraph dg = getInsertInsert();
+        int count = 0;
+        for(Object x : dg.vertexSet())
+        {
+            count ++;
+        }
+        return count;
+    }
+    
+    public int countInsertDelete()
+    {
+        DirectedGraph dg = getInsertDelete();
+        int count = 0;
+        for(Object x : dg.vertexSet())
+        {
+            count ++;
+        }
+        return count;
+    }
+    
+    public int countDeleteInsert()
+    {
+        DirectedGraph dg = getDeleteInsert();
+        int count = 0;
+        for(Object x : dg.vertexSet())
+        {
+            count ++;
+        }
+        return count;
     }
     
     public DirectedGraph getD1()

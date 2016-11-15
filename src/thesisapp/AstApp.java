@@ -27,7 +27,7 @@ public class AstApp {
             cu = JavaParser.parse(in);
             //new MethodVisitor().visit(cu, null);
         } catch (FileNotFoundException | ParseException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GraphExample.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

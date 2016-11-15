@@ -5,9 +5,7 @@
  */
 package thesisapp;
 
-import graphmodel.GraphCompare;
 import graphmodel.GraphProcess;
-import graphmodel.GraphVis;
 import model.Dataset;
 
 /**
@@ -15,42 +13,41 @@ import model.Dataset;
  * @author Momo
  */
 public class ThesisApp {
-    
-    
-    public ThesisApp()
-    {
-        
+
+    public ThesisApp() {
+
     }
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Dataset app0 = new Dataset();
-        app0.readFile("g.puml");
-        
-        Dataset app1 = new Dataset();
-        app1.readFile("b.puml");
-        
-        Dataset app2 = new Dataset();
-        app2.readFile("c.puml");
-        
-        GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-        GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
-        GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
-        //DirectedGraph la = gc.getDelete();
-        //gp.getC1();
-        //GraphVis.print(gc2.getNewNode());
-        //GraphVis.print(gp.mergeSemantic());
-        //GraphVis.print(gp.getC2());
-        GraphVis.print(gp.getX());
-        
-        //GraphVis.print(gc1.getUnchange());
-        //GraphVis.print(gc1.getR1());
-//        GraphVis.print(app0.graph);
-        //GraphVis.print(gc.getUnchange());
-        //GraphVis.print(gc.getDelete());
+        System.out.print(" ");
+        for (int x = 1; x < 5; x++) {
+            System.out.print(" " + x);
+        }
+        System.out.println("");
+        for (int x = 1; x < 5; x++) {
+            System.out.print(x);
+            for (int y = 1; y < 5; y++) {
+                Dataset app0 = new Dataset();
+                app0.readFile("case10.puml");
+
+                Dataset app1 = new Dataset();
+                app1.readFile("case1" + x + ".puml");
+
+                Dataset app2 = new Dataset();
+                app2.readFile("case1" + y + ".puml");
+
+                GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+                System.out.print(" " + gp.countDeleteDelete());
+                    //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
+                //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
+            }
+            System.out.println();
+        }
+
     }
-    
+
 }
