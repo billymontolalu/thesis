@@ -41,7 +41,7 @@ public class ThesisApp {
                 app2.readFile("case1" + y + ".puml");
 
                 GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-                System.out.print(" " + gp.countDeleteDelete());
+                //System.out.print(" " + gp.countDeleteDelete());
                     //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
                 //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
             }

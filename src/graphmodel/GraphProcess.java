@@ -45,7 +45,6 @@ public class GraphProcess {
                 Class c1 = (Class) node1;
                 for(Object node2 : newNode2.vertexSet())
                 {
-                    
                     if(node2 instanceof Class)
                     {
                         Class c2 = (Class) node2;
@@ -70,7 +69,22 @@ public class GraphProcess {
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         GraphCompare gc1 = new GraphCompare(v0, v1);
         GraphCompare gc2 = new GraphCompare(v0, v2);
-        return null;
+        DirectedGraph newNode1 = gc1.getNewNode();
+        DirectedGraph newNode2 = gc2.getNewNode();
+        for(Object node1 : newNode1.vertexSet())
+        {
+            Atom n1 = (Atom) node1;
+            for(Object node2 : newNode2.vertexSet())
+            {
+                Atom n2 = (Atom) node2;
+                if(n1.equals(n2))
+                {
+                    dg.addVertex(n1);
+                }
+            }
+        }
+        
+        return dg;
     }
     
     public DirectedGraph getDeleteInsert()
