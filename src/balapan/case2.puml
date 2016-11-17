@@ -1,0 +1,28 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+Passenger : int weight
+Level : int level
+Level : getLevel()
+Level : setLevel()
+Bonus : int order
+Bonus : int passenger
+Bonus : int crash
+Bonus : setBonus()
+Bonus : getBonus()
+Bonus : getOrder()
+Bicycle --|> Vehicle
+MotorVehicle --|> Vehicle
+FourWhell --|> MotorVehicle
+TwoWhell --|> MotorVehicle
+Truck --|> FourWhell
+Car --|> FourWhell
+Passenger -- Vehicle
+Level -- Vehicle
+Bonus -- Vehicle
+@enduml

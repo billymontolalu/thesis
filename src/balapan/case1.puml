@@ -1,0 +1,23 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+Passenger : int weight
+Driver : int idDriver
+Race : int idRace
+Level : int level
+Bicycle --|> Vehicle
+MotorVehicle --|> Vehicle
+FourWhell --|> MotorVehicle
+TwoWhell --|> MotorVehicle
+Truck --|> FourWhell
+Car --|> FourWhell
+Passenger -- Vehicle
+Race -- Vehicle
+Level -- Race
+Driver -- Race
+@enduml
