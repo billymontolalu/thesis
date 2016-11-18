@@ -1,0 +1,35 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : accelerate()
+Vehicle : brake()
+Passenger : int weight
+Passenger : destination
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+Car : nosVolume
+Racer : bonus
+Racer : position
+Racer : point
+Racer : money
+Racer : isFinish()
+Racer : isCollide()
+Race : level
+Race : rank()
+Race : gameStart()
+Race : gameEnd()
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+Vehicle -- Passenger
+MotorVehicle --|> Vehicle
+Racer -- Vehicle
+Racer -- Race
+@enduml

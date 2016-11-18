@@ -1,0 +1,40 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Passenger : int weight
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+Point : int point
+Point : getOrder()
+Point : getPoint()
+Point : getCrashInfo()
+Point : getWinner()
+Money : int transaction
+Money : getBonus()
+Money : getOrder()
+Money : getVehicleType()
+Bonus : int bonus
+Bonus : int getNumberOfPassenger
+Bonus : riseTime
+Bonus : downTime
+Bonus : setBonus()
+Order : int order
+Order : setOrder()
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+MotorVehicle --|> Vehicle
+Vehicle --> Point
+Bonus --> Money
+Passenger --> Bonus
+Vehicle --> Passenger
+Order --> Money
+Order --> Point
+@enduml

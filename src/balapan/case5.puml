@@ -1,0 +1,42 @@
+@startuml
+Vehicle : String color
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int weightMax
+Vehicle : int passenger
+Vehicle : turnRight()
+Vehicle : turnLeft()
+Bike : String color
+Bike : int speed
+Bike : int weight
+Bike : int weightMax
+Bike : getPassenger
+Pedicab : String color
+Pedicab : int speed
+Pedicab : int weight
+Pedicab : int weightMax
+Pedicab : getPassenger
+MotorCycle : String color
+MotorCycle : int speed
+MotorCycle : int weight
+MotorCycle : int weightMax
+MotorCycle : getPassenger
+Truck : String color
+Truck : int speed
+Truck : int weight
+Truck : int weightMax
+Truck : getPassenger
+Car : String color
+Car : int speed
+Car : int weight
+Car : int weightMax
+Car : getPassenger
+Passenger : int amount
+Passenger : int weight
+Vehicle -- Truck
+Vehicle -- Car
+Vehicle -- MotorCycle
+Vehicle -- Bike
+Vehicle -- Pedicab
+Vehicle -- Passenger
+@enduml
