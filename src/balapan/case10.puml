@@ -1,0 +1,62 @@
+@startuml
+Race : Player racer
+Race : Vehicle raceVehicle
+Race : int bonus
+Race : calculateBonus()
+Player : String name
+Player : float money
+Player : setName()
+Player : String getName()
+Player : setMoney()
+Player : float getMoney()
+Vehicle : int numOfWheels
+Vehicle : String name
+Vehicle : int speed
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : String getName()
+Vehicle : int getWheels()
+Vehicle : int getSpeed()
+Vehicle : int getPassenger()
+Vehicle : int getMaxWeight()
+Vehicle : go()
+Vehicle : stop()
+Engine : String name
+Engine : int capacity
+Engine : int horsePower
+Engine : void setName()
+Engine : String getName()
+Engine : void setCapacity()
+Engine : int getCapacity()
+Engine : setHorsePower()
+Engine : int getHorsePower()
+EnginedVehicle : Engine vehicleEngine
+EnginedVehicle : engineStart()
+EnginedVehicle : engineStop()
+Garage : Vehicle vehicles[]
+Garage : Player garagePlayer
+Garage : addVehicle()
+Garage : deleteVehicle()
+EnginedVehicleWithNos : EnginedVehicle oEnginedVehicle
+EnginedVehicleWithNos : int nosVolume
+DecorateVehicle : Vehicle decorateVehicle
+DecorateVehicle : varchar color
+DecorateVehicle : image motif
+DecorateVehicle : getColor()
+DecorateVehicle : getMotif()
+PassengerVehicle : addPassenger()
+PassengerVehicle : deletePassenger()
+PassengerVehicle : calculateWeight()
+Race --> Vehicle
+Player -- Race
+Engine -- EnginedVehicle
+EnginedVehicle --|> Vehicle
+Garage -- Player
+Bicycle --|> Vehicle
+Pedicab --|> Vehicle
+Truck --|> EnginedVehicle
+Car --|> EnginedVehicle
+EnginedVehicleWithNos --|> EnginedVehicle
+DecorateVehicle --|> Vehicle
+PassengerVehicle --|> Vehicle
+@enduml

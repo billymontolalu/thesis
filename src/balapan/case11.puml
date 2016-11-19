@@ -1,0 +1,24 @@
+@startuml
+Vehicle : String color
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : addPassenger()
+Vehicle : accelerate()
+Vehicle : stoping()
+Passenger : int weight
+Passenger : startPoint
+Passenger : stopPoint
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+MotorVehicle : nosVolume
+Player : nickName
+Player : moneyAmount
+
+Bicycle --|> Vehicle
+Vehicle -- Passenger
+MotorVehicle --|> Vehicle
+@enduml

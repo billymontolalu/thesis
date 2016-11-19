@@ -1,0 +1,26 @@
+@startuml
+Vehicle : colour
+Vehicle : speed
+Vehicle : weight
+Vehicle : passenger
+Vehicle : maxWeight
+Vehicle : currentRank
+Vehicle : point
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : start()
+Vehicle : stop()
+Vehicle : getRank()
+Vehicle : countMoney()
+Vehicle : addBonus()
+Vehicle : minusSpeed()
+Passenger : weight
+MotorVehicle : engineType
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+Vehicle -- Passenger
+MotorVehicle --|> Vehicle
+@enduml
