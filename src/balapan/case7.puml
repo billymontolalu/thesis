@@ -1,14 +1,33 @@
 @startuml
-Vehicle : String colour
+Vehicle : String paintColors
+Vehicle : int vehicle
+Vehicle : String vehicleType
+Vehicle : int motif
 Vehicle : int speed
-Vehicle : int weight
-Vehicle : int passenger
-Vehicle : int maxWeight
-Vehicle : turnLeft()
-Vehicle : turnRight()
-Passenger : int weight
-Bicycle : int wheelSize
+Vehicle : int suspension
+Vehicle : setOrder()
+Vehicle : getOrder()
+Passenger : int passenger
+Passenger : int riseTime
+Passenger : int downTime
+Passenger : String vehicleType
+Passenger : setPassenger()
+Passenger : setCivilians()
+Passenger : setPublicFacilities()
 MotorVehicle : String engineType
+MotorVehicle : int weight
+MotorVehicle : int maxWeight
+MotorVehicle : String nos
+MotorVehicle : setVehicleType()
+MotorVehicle : setSpeed()
+NonMotorVehicle : int NonMotorVehicleType
+NonMotorVehicle : int wheelSize
+NonMotorVehicle : int weight
+NonMotorVehicle : int maxWeight
+NonMotorVehicle : String vehicleType
+NonMotorVehicle : String nos
+NonMotorVehicle : setVehicleType()
+NonMotorVehicle : getSpeed()
 Point : int point
 Point : getOrder()
 Point : getPoint()
@@ -25,16 +44,23 @@ Bonus : downTime
 Bonus : setBonus()
 Order : int order
 Order : setOrder()
-FourWheel --|> MotorVehicle
-Truck --|> FourWheel
-Car --|> FourWheel
-TwoWheel --|> MotorVehicle
-Bicycle --|> Vehicle
+Player : String player
+Player : int totalSpeed
+Player : String vehicleType
+Player : getMoney()
+Player : getBonus()
+Player : getOrder()
+Player : getBreakTime()
+Player : getPassenger()
 MotorVehicle --|> Vehicle
+NonMotorVehicle --|> Vehicle
 Vehicle --> Point
 Bonus --> Money
 Passenger --> Bonus
 Vehicle --> Passenger
 Order --> Money
 Order --> Point
+Vehicle <--> Player
+Point --> Player
+Passenger --> Player
 @enduml

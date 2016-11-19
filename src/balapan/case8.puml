@@ -1,0 +1,36 @@
+@startuml
+Vehicle : String name
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : Passenger vehiclePassenger
+Vehicle : Colour vehicleColour
+Vehicle : Motive vehicleMotive
+Vehicle : Suspension vehicleSuspension
+Vehicle : int maxWeight
+Vehicle : int wheelNum
+Vehicle : void turnLeft()
+Vehicle : void turnRight()
+Vehicle : void accelerate()
+Vehicle : void decelerate()
+Vehicle : int calculatePoint()
+Vehicle : int calculateSpeed()
+MotorLessVehicle : int wheelSize
+MotorLessVehicle : int calculateSpeed()
+MotorVehicle : Engine vehicleEngine
+MotorVehicle : Nos vehicleNos
+MotorVehicle : int calculateSpeed()
+Nos : int nosVolume
+AddOns : String name
+AddOns : int itemPoint
+Passenger : int weight
+Engine : String type
+Nos -- MotorVehicle
+MotorLessVehicle --|> Vehicle
+MotorVehicle --|> Vehicle
+MotorVehicle -- Engine
+Passenger --|> AddOns
+Suspension --|> AddOns
+Motive --|> AddOns
+Colour --|> AddOns
+Passenger -- Vehicle
+@enduml
