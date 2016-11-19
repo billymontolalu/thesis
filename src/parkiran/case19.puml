@@ -1,0 +1,46 @@
+@startuml
+Camera : String ip
+Camera : int number
+Camera : blob picture
+Camera : getPicture()
+Camera : setPicture()
+Camera : getNumber()
+Camera : setNumber()
+Camera : getIp()
+Camera : setIp()
+
+ControlSystem : Currency price
+ControlSystem : boolean paid
+ControlSystem : printInvoice()
+ControlSystem : getPaid()
+ControlSystem : setPaid()
+ControlSystem : getPrice()
+
+Ticket : String no
+Ticket : String barcode
+Ticket : setNo()
+Ticket : getNo()
+Ticket : getBarcode()
+Ticket : setBarcode()
+
+Gate : boolean status
+Gate : void openGate()
+Gate : void closeGate()
+Gate : boolean getStatus()
+Gate : boolean setStatus()
+
+Vehicle : int number
+Vehicle : DateTime timeIn
+Vehicle : DateTime timeOut
+Vehicle : setNumer()
+Vehicle : getNumber()
+Vehicle : setTimeIn()
+Vehicle : getTimeIn()
+Vehicle : setTimeOut()
+Vehicle : getTimeOut()
+
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
+Vehicle -- ControlSystem
+@enduml

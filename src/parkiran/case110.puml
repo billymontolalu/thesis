@@ -1,0 +1,30 @@
+@startuml
+Car : carId
+Car : timeIn
+Car : timeOut
+Car : parkingIn()
+Car : parkingOut()
+Car : parking()
+Driver : pushedButton()
+Driver : pushEntryButton()
+Driver : getTicket()
+GateOperator : operatorId
+GateOperator : operatorName
+GateOperator : currentGateId
+GateOperator : schedule
+GateOperator : getTicket()
+GateOperator : getMoney()
+GateOperator : giveMoneyBack()
+GateOperator : validateTicket()
+GateOperator : countingMoney()
+Gate : gateId
+Gate : gateOpen()
+Gate : gateClose()
+Gate : printTicket()
+Gate : buttonPressed()
+Gate : getCarIdPicture()
+Gate : saveCarIdPicture()
+Car -- Driver
+Driver -- GateOperator
+GateOperator -- Gate
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+Vehicle : varchar number
+Vehicle : String name
+Vehicle : setNumber()
+Vehicle : getNumber()
+Vehicle : getName()
+Vehicle : setName()
+Ticket : ticketId
+Ticket : ticketDate
+Ticket : ticketTime
+Gate : int gateId
+Gate : open()
+Gate : close()
+ParkingController : getParking()
+ParkingController : getPaid()
+ParkingController : openGate()
+ParkingController : closeGate()
+Parking : Vehicle parkingVehicle
+Parking : Ticket parkingTicket
+Parking : Image parkingImage
+Parking : setVehicle()
+Parking : setTicket()
+Parking : setImage()
+Camera : int camera_id
+Camera : capture()
+Camera : Image getImage()
+Parking -- ParkingController
+Parking -- Vehicle
+Parking -- Camera
+Gate -- ParkingController
+Ticket -- Parking
+@enduml

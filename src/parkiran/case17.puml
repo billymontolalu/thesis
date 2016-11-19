@@ -1,6 +1,4 @@
 @startuml
-Vehicle : int number
-
 Camera : String ip
 Camera : getPicture()
 Camera : getLicenseNumber()
@@ -19,7 +17,11 @@ Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
 
+ParkAttendant : int EmpId
+ParkAttendant : String name
+
 Camera -- ControlSystem
 Gate -- ControlSystem
 Ticket -- ControlSystem
+ParkAttendant -- ControlSystem
 @enduml
