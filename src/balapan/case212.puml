@@ -1,0 +1,31 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : int motif
+Vehicle : suspension
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : changeMotif()
+Vehicle : changeColour()
+Player : name
+Player : int bonus
+Player : money
+Player : grabPassanger()
+Player : dropPassanger()
+Passanger : int weight
+NonMotorVehicle : int wheelSize
+MotorVehicle : String engineType
+MotorVehicle : int nosVolume
+Player -- Vehicle
+Vehicle -- Passanger
+NonMotorVehicle --|> Vehicle
+MotorVehicle --|> Vehicle
+Pedicab --|> NonMotorVehicle
+Bicycle --|> NonMotorVehicle
+Truck --|> MotorVehicle
+Car --|> MotorVehicle
+Motor --|> MotorVehicle
+@enduml

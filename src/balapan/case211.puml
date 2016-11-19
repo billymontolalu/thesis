@@ -17,8 +17,16 @@ MotorVehicle : String engineType
 MotorVehicle : nosVolume
 Player : nickName
 Player : moneyAmount
-
+Player : currentVehicle
+Player : play()
+Level : no
+Level : startPoint
+Level : finishPoint
+Level : route
+Level : potentialPassenger
 Bicycle --|> Vehicle
 Vehicle -- Passenger
 MotorVehicle --|> Vehicle
+Vehicle -- Player
+Level -- Player
 @enduml
