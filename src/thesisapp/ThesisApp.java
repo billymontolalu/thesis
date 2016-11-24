@@ -32,13 +32,13 @@ public class ThesisApp {
             System.out.print(x);
             for (int y = 1; y < 5; y++) {
                 Dataset app0 = new Dataset();
-                app0.readFile("case10.puml");
+                app0.readFile("parkiran", "case10.puml");
 
                 Dataset app1 = new Dataset();
-                app1.readFile("case1" + x + ".puml");
+                app1.readFile("parkiran", "case1" + x + ".puml");
 
                 Dataset app2 = new Dataset();
-                app2.readFile("case1" + y + ".puml");
+                app2.readFile("parkiran", "case1" + y + ".puml");
 
                 GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
                 //System.out.print(" " + gp.countDeleteDelete());

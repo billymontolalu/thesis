@@ -1,0 +1,38 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : String motif
+Vehicle : String suspension
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Passenger : int weight
+Bicycle : int wheelSize
+Bicycle : int wheelNumber
+MotorVehicle : String engineType
+Calculation : int id
+Calculation : int money
+Calculation : int bonus
+Calculation : String passengerStatus
+Calculation : int speedNumber
+Calculation : getMoney()
+Calculation : getBonus()
+Game : int no
+Game : String rank
+Game : String player
+Game : getPassenger()
+Game : getRank()
+Level : int level
+Level : getLevel()
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+Vehicle -- Passenger
+MotorVehicle --|> Vehicle
+Vehicle -- Calculation
+Game -- Calculation
+@enduml

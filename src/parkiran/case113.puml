@@ -2,6 +2,7 @@
 Vehicle : int number
 Vehicle : DateTime timeIn
 Vehicle : DateTime timeOut
+Vehicle : saveVehicleData()
 
 Camera : String ip
 Camera : getPicture()
@@ -13,6 +14,7 @@ ControlSystem : setPaid()
 ControlSystem : getPrice()
 
 Ticket : String no
+Ticket : String barcode
 Ticket : print()
 Ticket : getBarcode()
 

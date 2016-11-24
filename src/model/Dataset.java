@@ -86,12 +86,12 @@ public class Dataset {
         return null;
     }
     
-    public void readFile(String fileName)
+    public void readFile(String dataset, String fileName)
     {
         BufferedReader br = null;
         try {
             String sCurrentLine;
-            File f = new File(getClass().getResource("/parkiran/" + fileName).getFile());
+            File f = new File(getClass().getResource("/" + dataset + "/" + fileName).getFile());
             br = new BufferedReader(new FileReader(f));
             while ((sCurrentLine = br.readLine()) != null) {
                 sCurrentLine = sCurrentLine.trim();

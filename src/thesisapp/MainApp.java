@@ -8,8 +8,6 @@ package thesisapp;
 import graphmodel.GraphProcess;
 import java.util.Vector;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import model.Dataset;
 
 /**
@@ -24,24 +22,30 @@ public class MainApp extends javax.swing.JFrame {
     public MainApp() {
         initComponents();
 
-        getResult();
+        //getParkiran();
     }
     
-    private void getResult()
+    private void getBalapan()
     {
         Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
         Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataii = new Vector<Vector<Object>>();
         
+        Vector<Vector<Object>> datasdd = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasid = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasdi = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasii = new Vector<Vector<Object>>();
+        
         Vector<String> headers = new Vector<String>();
         headers.add(" ");
-        for (int x = 1; x < 5; x++)
+        for (int x = 1; x < 13; x++)
         {
             headers.add(Integer.toString(x));
         }
         
-        for (int x = 1; x < 5; x++) {
+        for (int x = 1; x < 13; x++) {
+            //tanpa semantic
             Vector<Object> rowdd = new Vector<Object>();
             rowdd.add(Integer.toString(x));
             
@@ -53,15 +57,157 @@ public class MainApp extends javax.swing.JFrame {
             
             Vector<Object> rowii = new Vector<Object>();
             rowii.add(Integer.toString(x));
-            for (int y = 1; y < 5; y++) {
+            
+//            dengan semntic
+            Vector<Object> rowsdd = new Vector<Object>();
+            rowsdd.add(Integer.toString(x));
+            
+            Vector<Object> rowsid = new Vector<Object>();
+            rowsid.add(Integer.toString(x));
+            
+            Vector<Object> rowsdi = new Vector<Object>();
+            rowsdi.add(Integer.toString(x));
+            
+            Vector<Object> rowsii = new Vector<Object>();
+            rowsii.add(Integer.toString(x));
+            
+            for (int y = 1; y < 13; y++) {
                 Dataset app0 = new Dataset();
-                app0.readFile("case10.puml");
+                app0.readFile("balapan", "case20.puml");
 
                 Dataset app1 = new Dataset();
-                app1.readFile("case1" + x + ".puml");
+                app1.readFile("balapan", "case2" + x + ".puml");
 
                 Dataset app2 = new Dataset();
-                app2.readFile("case1" + y + ".puml");
+                app2.readFile("balapan", "case2" + y + ".puml");
+
+                GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+                //System.out.print(" " + gp.countDeleteDelete());
+                if(x == y)
+                {
+                    rowdd.add(0);
+                    rowid.add(0);
+                    rowdi.add(0);
+                    rowii.add(0);
+                    
+                    //menambahkan dengan semantuc
+                    rowsdd.add(0);
+                    rowsid.add(0);
+                    rowsdi.add(0);
+                    rowsii.add(0);
+                }else
+                {
+                    rowdd.add(gp.countDeleteDelete());
+                    rowid.add(gp.countInsertDelete());
+                    rowdi.add(gp.countDeleteInsert());
+                    rowii.add(gp.countInsertInsert());
+                    
+                    rowsdd.add(gp.countDeleteDelete());
+                    rowsid.add(gp.countInsertDelete());
+                    rowsdi.add(gp.countDeleteInsert());
+                    rowsii.add(gp.countInsertInsert());   
+                }
+            }
+            
+            datadd.add(rowdd);
+            dataid.add(rowid);
+            datadi.add(rowdi);
+            dataii.add(rowii);
+            
+            //semantic
+            datasdd.add(rowsdd);
+            datasid.add(rowsid);
+            datasdi.add(rowsdi);
+            datasii.add(rowsii);
+        }
+        
+        JTable tabledd = new JTable( datadd, headers );
+        jScrollPanedd.getViewport().removeAll();
+        jScrollPanedd.getViewport().add(tabledd);
+        
+        JTable tableid = new JTable( dataid, headers );
+        jScrollPaneid.getViewport().removeAll();
+        jScrollPaneid.getViewport().add(tableid);
+        
+        JTable tabledi = new JTable( datadi, headers );
+        jScrollPanedi.getViewport().removeAll();
+        jScrollPanedi.getViewport().add(tabledi);
+        
+        JTable tableii = new JTable( dataii, headers );
+        jScrollPaneii.getViewport().removeAll();
+        jScrollPaneii.getViewport().add(tableii);
+        
+        JTable tablesdd = new JTable( datasdd, headers );
+        jScrollPanesdd.getViewport().removeAll();
+        jScrollPanesdd.getViewport().add(tablesdd);
+        
+        JTable tablesid = new JTable( datasid, headers );
+        jScrollPanesid.getViewport().removeAll();
+        jScrollPanesid.getViewport().add(tablesid);
+        
+        JTable tablesdi = new JTable( datasdi, headers );
+        jScrollPanesdi.getViewport().removeAll();
+        jScrollPanesdi.getViewport().add(tablesdi);
+        
+        JTable tablesii = new JTable( datasii, headers );
+        jScrollPanesii.getViewport().removeAll();
+        jScrollPanesii.getViewport().add(tablesii);
+    }
+    
+    private void getParkiran()
+    {
+        Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> dataii = new Vector<Vector<Object>>();
+        
+        Vector<Vector<Object>> datasdd = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasid = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasdi = new Vector<Vector<Object>>();
+        Vector<Vector<Object>> datasii = new Vector<Vector<Object>>();
+        
+        Vector<String> headers = new Vector<String>();
+        headers.add(" ");
+        for (int x = 1; x < 11; x++)
+        {
+            headers.add(Integer.toString(x));
+        }
+        
+        for (int x = 1; x < 11; x++) {
+            Vector<Object> rowdd = new Vector<Object>();
+            rowdd.add(Integer.toString(x));
+            
+            Vector<Object> rowid = new Vector<Object>();
+            rowid.add(Integer.toString(x));
+            
+            Vector<Object> rowdi = new Vector<Object>();
+            rowdi.add(Integer.toString(x));
+            
+            Vector<Object> rowii = new Vector<Object>();
+            rowii.add(Integer.toString(x));
+            
+            //dengan semantic
+            Vector<Object> rowsdd = new Vector<Object>();
+            rowsdd.add(Integer.toString(x));
+            
+            Vector<Object> rowsid = new Vector<Object>();
+            rowsid.add(Integer.toString(x));
+            
+            Vector<Object> rowsdi = new Vector<Object>();
+            rowsdi.add(Integer.toString(x));
+            
+            Vector<Object> rowsii = new Vector<Object>();
+            rowsii.add(Integer.toString(x));
+            
+            for (int y = 1; y < 11; y++) {
+                Dataset app0 = new Dataset();
+                app0.readFile("parkiran", "case10.puml");
+
+                Dataset app1 = new Dataset();
+                app1.readFile("parkiran", "case1" + x + ".puml");
+
+                Dataset app2 = new Dataset();
+                app2.readFile("parkiran", "case1" + y + ".puml");
 
                 GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
                 //System.out.print(" " + gp.countDeleteDelete());
@@ -79,6 +225,20 @@ public class MainApp extends javax.swing.JFrame {
                     rowii.add(gp.countInsertInsert());
                 }
                 
+                if(x == y)
+                {
+                    rowsdd.add(0);
+                    rowsid.add(0);
+                    rowsdi.add(0);
+                    rowsii.add(0);
+                }else
+                {
+                    rowsdd.add(gp.countDeleteDelete());
+                    rowsid.add(gp.countInsertDelete());
+                    rowsdi.add(gp.countDeleteInsert());
+                    rowsii.add(gp.countInsertInsert());
+                }
+                
                     //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
                 //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
             }
@@ -86,19 +246,45 @@ public class MainApp extends javax.swing.JFrame {
             dataid.add(rowid);
             datadi.add(rowdi);
             dataii.add(rowii);
+            
+//            dengan semantic
+            datasdd.add(rowsdd);
+            datasid.add(rowsid);
+            datasdi.add(rowsdi);
+            datasii.add(rowsii);
         }
         
         JTable tabledd = new JTable( datadd, headers );
+        jScrollPanedd.getViewport().removeAll();
         jScrollPanedd.getViewport().add(tabledd);
         
         JTable tableid = new JTable( dataid, headers );
+        jScrollPaneid.getViewport().removeAll();
         jScrollPaneid.getViewport().add(tableid);
         
         JTable tabledi = new JTable( datadi, headers );
+        jScrollPanedi.getViewport().removeAll();
         jScrollPanedi.getViewport().add(tabledi);
         
         JTable tableii = new JTable( dataii, headers );
+        jScrollPaneii.getViewport().removeAll();
         jScrollPaneii.getViewport().add(tableii);
+        
+        JTable tablesdd = new JTable( datadd, headers );
+        jScrollPanesdd.getViewport().removeAll();
+        jScrollPanesdd.getViewport().add(tablesdd);
+        
+        JTable tablesid = new JTable( dataid, headers );
+        jScrollPanesid.getViewport().removeAll();
+        jScrollPanesid.getViewport().add(tablesid);
+        
+        JTable tablesdi = new JTable( datadi, headers );
+        jScrollPanesdi.getViewport().removeAll();
+        jScrollPanesdi.getViewport().add(tablesdi);
+        
+        JTable tablesii = new JTable( dataii, headers );
+        jScrollPanesii.getViewport().removeAll();
+        jScrollPanesii.getViewport().add(tablesii);
     }
 
     /**
@@ -126,6 +312,8 @@ public class MainApp extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(784, 633));
@@ -157,7 +345,24 @@ public class MainApp extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Case Study");
+
+        jMenuItem2.setText("Parkiran");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Balapan");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -199,6 +404,16 @@ public class MainApp extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        getParkiran();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        getBalapan();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,6 +457,8 @@ public class MainApp extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPanedd;
     private javax.swing.JScrollPane jScrollPanedi;
     private javax.swing.JScrollPane jScrollPaneid;

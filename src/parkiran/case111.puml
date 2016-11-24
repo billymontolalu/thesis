@@ -1,0 +1,39 @@
+@startuml
+Car : String numberLicense
+Car : Date dateIn
+Car : Date dateOut
+
+Camera : String ip
+Camera : int id
+Camera : getCapture()
+Camera : setCapture()
+
+Ticket : int id
+Ticket : Date dateIn
+
+Gate : int statusGate
+Gate : openGate()
+Gate : closeGate()
+
+Employee : int id
+Employee : String name
+Employee : checkValidateTicket()
+
+Server : getCaptureCamera()
+Server : calculatePrice()
+
+TicketMachine : printTicket()
+
+Car --> Ticket
+Car --> TicketMachine
+Car --> Employee
+Car --> Gate
+Employee --> Ticket
+Employee --> Server
+Employee --> Gate
+Camera --> Car
+Camera --> Server
+TicketMachine --|> Ticket
+TicketMachine --> Gate
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+Vehicle : String colour
+Vehicle : int suspension
+Vehicle : String motives
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Bicycle : int wheelSize
+Bicycle : int getWheelSize()
+MotorVehicle : String engineType
+MotorVehicle : String getEngineType()
+Car : int nosVolume
+Car : int getNosVolume()
+Car : increaseNosVolume()
+Race : String name
+Race : Location route
+Race : DateTime raceTime
+Race : intraceType
+Race : Position positions
+Race : String getRaceName()
+Location : String name
+Location : String getName()
+Passenger : int weight
+Passenger : Location startLocation
+Passenger : Location finishLocation
+Passenger : int money
+Passenger : int getMoney()
+Passenger : Location getStartLocation()
+Passenger : Location getFinishLocation()
+Player : String name
+Player : int number
+Player : int money
+Player : Vehicle vehicle
+Player : String getName()
+Player : int getMoney()
+Player : increaseMoney()
+Player : decreaseMoney()
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+MotorVehicle --|> Vehicle
+Position *-up- Player
+Race *-up- Position
+Race *-up- Location
+Location -- Passenger
+Vehicle -- Player
+@enduml

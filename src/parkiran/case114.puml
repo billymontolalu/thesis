@@ -1,0 +1,30 @@
+@startuml
+Vehicle : String plateNumber
+Vehicle : getPlateNumber()
+
+Camera : String ip
+Camera : getPicture()
+Camera : getPlateNumber()
+
+Ticket : String number
+Ticket : Vehicle vehicle
+Ticket : DateTime timeIn
+Ticket : DateTime timeOut
+Ticket : bool paid
+Ticket : int picture
+Ticket : print()
+Ticket : getBarcode()
+Ticket : bool getPaid()
+Ticket : setPaid()
+Ticket : getPrice()
+
+Gate : bool status
+Gate : openGate()
+Gate : closeGate()
+Gate : bool getStatus()
+
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
+Vehicle -- ControlSystem
+@enduml
