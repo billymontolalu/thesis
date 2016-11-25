@@ -34,4 +34,8 @@ public class Atom {
         this.label = label;
     }
     
+    public boolean equalSemantic(Object otherObject)
+    {
+        return false;
+    }
 }

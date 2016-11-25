@@ -40,27 +40,43 @@ public class GraphProcess {
         List<RelatedAtom> related = new ArrayList();
         for(Object node1 : newNode1.vertexSet())
         {
-            if(node1 instanceof Class)
+            Atom c1 = (Atom) node1;
+            for(Object node2 : newNode2.vertexSet())
             {
-                Class c1 = (Class) node1;
-                for(Object node2 : newNode2.vertexSet())
+                Atom c2 = (Atom) node2;
+                if(c1.equalSemantic(c2))
                 {
-                    if(node2 instanceof Class)
-                    {
-                        Class c2 = (Class) node2;
-                        boolean issimiliar = new Semantic().isSimiliar(c1.getLabel(), c2.getLabel());
-                        if(issimiliar)
-                        {
-                            RelatedAtom ra = new RelatedAtom(c1, c2);
-                            related.add(ra);
-                        }
-                        //cek apakah ada tetangga yang sama
-                    }
+                    RelatedAtom ra = new RelatedAtom(c1, c2);
+                    related.add(ra);
                 }
             }
         }
         
         return related;
+    }
+    
+    public DirectedGraph getInsertInsertSemantic()
+    {
+        DirectedGraph dg = new DirectedMultigraph<>(
+                    new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
+        GraphCompare gc1 = new GraphCompare(v0, v1);
+        GraphCompare gc2 = new GraphCompare(v0, v2);
+        DirectedGraph newNode1 = gc1.getNewNode();
+        DirectedGraph newNode2 = gc2.getNewNode();
+        for(Object node1 : newNode1.vertexSet())
+        {
+            Atom n1 = (Atom) node1;
+            for(Object node2 : newNode2.vertexSet())
+            {
+                Atom n2 = (Atom) node2;
+                if(n1.equals(n2))
+                {
+                    dg.addVertex(n1);
+                }
+            }
+        }
+        
+        return dg;
     }
     
     public DirectedGraph getInsertInsert()
@@ -390,6 +406,7 @@ public class GraphProcess {
                 }
             }
             x.removeVertex(moveFrom);
+            dg.removeVertex(moveFrom);
         }
 
         return x;

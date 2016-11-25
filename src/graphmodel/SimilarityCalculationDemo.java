@@ -39,7 +39,7 @@ public class SimilarityCalculationDemo {
 	}
 	public static void main(String[] args) {
 		long t0 = System.currentTimeMillis();
-		run( "act","moderate" );
+		run( "humxantr","people" );
 		long t1 = System.currentTimeMillis();
 		System.out.println( "Done in "+(t1-t0)+" msec." );
 	}

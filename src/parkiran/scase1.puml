@@ -1,5 +1,6 @@
 @startuml
 Circle -- Shape
+Parallelogram : hit()
 Square -- Shape
 Rectangle -- Shape
 Parallelogram -- Shape

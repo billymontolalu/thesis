@@ -82,7 +82,6 @@ public class MainApp extends javax.swing.JFrame {
                 app2.readFile("balapan", "case2" + y + ".puml");
 
                 GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-                //System.out.print(" " + gp.countDeleteDelete());
                 if(x == y)
                 {
                     rowdd.add(0);
@@ -210,7 +209,6 @@ public class MainApp extends javax.swing.JFrame {
                 app2.readFile("parkiran", "case1" + y + ".puml");
 
                 GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-                //System.out.print(" " + gp.countDeleteDelete());
                 if(x == y)
                 {
                     rowdd.add(0);

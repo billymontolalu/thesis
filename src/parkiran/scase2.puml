@@ -1,5 +1,6 @@
 @startuml
 Circle -- Shape
+Quadrangle : attack()
 Quadrangle -- Shape
 Square -- Quadrangle
 Rectangle -- Quadrangle

@@ -61,17 +61,17 @@ public class Dataset {
     
     void addMethod(String className, String methodName)
     {
-        Method method = new Method(methodName);
-        graph.addVertex(method);
         Class classMethod = find(className);
+        Method method = new Method(methodName, classMethod);
+        graph.addVertex(method);
         graph.addEdge(classMethod, method, new RelationshipEdge(classMethod, method, EdgeVis.METHOD));
     }
     
     void addAttribut(String className, String attributeName)
     {
-        Attribute attribute = new Attribute(attributeName);
-        graph.addVertex(attribute);
         Class classAttribute = find(className);
+        Attribute attribute = new Attribute(attributeName, classAttribute);
+        graph.addVertex(attribute);
         graph.addEdge(classAttribute, attribute, new RelationshipEdge(classAttribute, attribute, EdgeVis.ATTRIBUTE));
     }
     
@@ -112,18 +112,21 @@ public class Dataset {
                             {
                                 addClass(class_name);
                             }
-                            //cek apakah dia method
-                            if(split[1].contains("()"))
-                            {
-                                String method = SyntaxString.removeSyntax(split[1].trim()).trim();
-                                addMethod(class_name, method);
-                            }else
-                            {
-                                String atribut = SyntaxString.removeSyntax(split[1].trim()).trim();
-                                addAttribut(class_name, atribut);
-                            }
                             
-                            //cek apakah dia attribut
+                            String properties[] = split[1].trim().split(" ");
+                            if(properties.length > 0)
+                            {
+                                String properti = properties[properties.length - 1];
+                                if(properti.contains("()"))
+                                {
+                                    String method = SyntaxString.removeSyntax(split[1].trim()).trim();
+                                    addMethod(class_name, method);
+                                }else
+                                {
+                                    String atribut = SyntaxString.removeSyntax(split[1].trim()).trim();
+                                    addAttribut(class_name, atribut);
+                                }
+                            }
                         }
                         else
                         {

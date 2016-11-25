@@ -1,8 +1,7 @@
 @startuml
-s2 -- s5
-s5 -- s0
-s1 -- s0
-s1 -- s2
-s2 -- s0
-s4 -- s1
+Parallelogram -- Shape
+Quadrangle -- Shape
+Square -- Quadrangle
+Rectangle -- Quadrangle
+Circle -- Shape
 @enduml

@@ -6,6 +6,7 @@
 package thesisapp;
 
 import graphmodel.GraphProcess;
+import graphmodel.GraphVis;
 import model.Dataset;
 
 /**
@@ -23,7 +24,7 @@ public class ThesisApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.print(" ");
+        /*System.out.print(" ");
         for (int x = 1; x < 5; x++) {
             System.out.print(" " + x);
         }
@@ -46,8 +47,22 @@ public class ThesisApp {
                 //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
             }
             System.out.println();
-        }
+        }*/
+        
+        Dataset app0 = new Dataset();
+        app0.readFile("parkiran", "scase0.puml");
 
+        Dataset app1 = new Dataset();
+        app1.readFile("parkiran", "scase1.puml");
+
+        Dataset app2 = new Dataset();
+        app2.readFile("parkiran", "scase2.puml");
+        
+        GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+        GraphVis.print(gp.getX());
+        System.out.println("");
+        GraphVis.print(gp.mergeSemantic());
+        //System.out.println(gp.getX());
     }
 
 }

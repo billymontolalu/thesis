@@ -5,6 +5,8 @@
  */
 package model;
 
+import graphmodel.Semantic;
+
 /**
  *
  * @author Momo
@@ -30,5 +32,24 @@ public class Class extends Atom {
         }
         return false; 
     }
-
+    
+    @Override
+    public boolean equalSemantic(Object otherObject)
+    {
+        if(otherObject instanceof Class)
+        {
+            Class c = (Class) otherObject;
+            Semantic s = new Semantic();
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return false;
+            }
+            
+            if(s.isSimiliar(this.getLabel(), c.getLabel()))
+            {
+                return true;
+            }
+        }
+        return false; 
+    }
 }
