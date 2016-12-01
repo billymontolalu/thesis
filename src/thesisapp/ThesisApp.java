@@ -50,18 +50,18 @@ public class ThesisApp {
         }*/
         
         Dataset app0 = new Dataset();
-        app0.readFile("parkiran", "scase0.puml");
+        app0.readFile("parkiran", "case10.puml");
 
         Dataset app1 = new Dataset();
-        app1.readFile("parkiran", "scase1.puml");
+        app1.readFile("parkiran", "case111.puml");
 
         Dataset app2 = new Dataset();
-        app2.readFile("parkiran", "scase2.puml");
+        app2.readFile("parkiran", "case18.puml");
         
         GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-        GraphVis.print(gp.getX());
-        System.out.println("");
-        GraphVis.print(gp.mergeSemantic());
+        GraphVis.print(gp.getC1());
+        //System.out.println("");
+        //GraphVis.print(gp.mergeSemantic());
         //System.out.println(gp.getX());
     }
 

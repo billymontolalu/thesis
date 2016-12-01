@@ -16,7 +16,7 @@ import edu.cmu.lti.ws4j.util.WS4JConfiguration;
  */
 public class Semantic {
     private static final ILexicalDatabase db = new NictWordNet();
-    private static final double threshold = 0.5;
+    private static final double threshold = 0.7;
     
     private String splitCamelcase(String word)
     {

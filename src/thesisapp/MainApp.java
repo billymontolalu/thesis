@@ -6,8 +6,11 @@
 package thesisapp;
 
 import graphmodel.GraphProcess;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.Vector;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import model.Dataset;
 
 /**
@@ -104,7 +107,7 @@ public class MainApp extends javax.swing.JFrame {
                     rowsdd.add(gp.countDeleteDelete());
                     rowsid.add(gp.countInsertDelete());
                     rowsdi.add(gp.countDeleteInsert());
-                    rowsii.add(gp.countInsertInsert());   
+                    rowsii.add(gp.countInsertSemantic());   
                 }
             }
             
@@ -167,12 +170,12 @@ public class MainApp extends javax.swing.JFrame {
         
         Vector<String> headers = new Vector<String>();
         headers.add(" ");
-        for (int x = 1; x < 11; x++)
+        for (int x = 1; x < 15; x++)
         {
             headers.add(Integer.toString(x));
         }
         
-        for (int x = 1; x < 11; x++) {
+        for (int x = 1; x < 15; x++) {
             Vector<Object> rowdd = new Vector<Object>();
             rowdd.add(Integer.toString(x));
             
@@ -198,7 +201,7 @@ public class MainApp extends javax.swing.JFrame {
             Vector<Object> rowsii = new Vector<Object>();
             rowsii.add(Integer.toString(x));
             
-            for (int y = 1; y < 11; y++) {
+            for (int y = 1; y < 15; y++) {
                 Dataset app0 = new Dataset();
                 app0.readFile("parkiran", "case10.puml");
 
@@ -234,7 +237,7 @@ public class MainApp extends javax.swing.JFrame {
                     rowsdd.add(gp.countDeleteDelete());
                     rowsid.add(gp.countInsertDelete());
                     rowsdi.add(gp.countDeleteInsert());
-                    rowsii.add(gp.countInsertInsert());
+                    rowsii.add(gp.countInsertSemantic());
                 }
                 
                     //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
@@ -280,9 +283,26 @@ public class MainApp extends javax.swing.JFrame {
         jScrollPanesdi.getViewport().removeAll();
         jScrollPanesdi.getViewport().add(tablesdi);
         
-        JTable tablesii = new JTable( dataii, headers );
+        JTable tablesii = new JTable( datasii, headers );
         jScrollPanesii.getViewport().removeAll();
         jScrollPanesii.getViewport().add(tablesii);
+        tablesii.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean   isSelected, boolean hasFocus, int row, int column) 
+            { 
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); 
+                //int score = (int) tableii.getModel().getValueAt(row, column);
+                
+                if (!table.isRowSelected(row))
+                {
+                    if(!value.equals(tableii.getModel().getValueAt(row, column))){
+                        c.setBackground(new java.awt.Color(239, 255, 0));
+                    }
+                    else
+                        c.setBackground(table.getBackground());
+                }
+                return c; 
+            } 
+        });
     }
 
     /**

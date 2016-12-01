@@ -63,6 +63,7 @@ public class GraphProcess {
         GraphCompare gc2 = new GraphCompare(v0, v2);
         DirectedGraph newNode1 = gc1.getNewNode();
         DirectedGraph newNode2 = gc2.getNewNode();
+        
         for(Object node1 : newNode1.vertexSet())
         {
             Atom n1 = (Atom) node1;
@@ -70,6 +71,10 @@ public class GraphProcess {
             {
                 Atom n2 = (Atom) node2;
                 if(n1.equals(n2))
+                {
+                    dg.addVertex(n1);
+                }
+                else if(n1.equalSemantic(n2))
                 {
                     dg.addVertex(n1);
                 }
@@ -187,6 +192,17 @@ public class GraphProcess {
     public int countInsertInsert()
     {
         DirectedGraph dg = getInsertInsert();
+        int count = 0;
+        for(Object x : dg.vertexSet())
+        {
+            count ++;
+        }
+        return count;
+    }
+    
+    public int countInsertSemantic()
+    {
+        DirectedGraph dg = getInsertInsertSemantic();
         int count = 0;
         for(Object x : dg.vertexSet())
         {
@@ -525,12 +541,14 @@ public class GraphProcess {
                 Object src = searchOnVertex(normalisasi, r.getSource());
                 if(src == null)
                 {
+                    src = r.getSource();
                     normalisasi.addVertex(src);
                 }
                 
                 Object dst = searchOnVertex(normalisasi, r.getDestination());
                 if(dst == null)
                 {
+                    dst = r.getDestination();
                     normalisasi.addVertex(dst);
                 }
                 

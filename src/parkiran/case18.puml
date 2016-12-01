@@ -26,7 +26,7 @@ Vehicle : DateTime timeOut
 
 GateOperator : checkTicket()
 
-ParkingArea : getAreaNumer()
+ParkingArea : getAreaNumber()
 
 Machine : giveTicket()
 
