@@ -12,9 +12,9 @@ import java.util.Arrays;
  * @author Momo
  */
 public final class SyntaxString {
-    static boolean isSyntaxString(String syntaxString)
+    public static boolean isSyntaxString(String syntaxString)
     {
-        String[] syntaxStrings = {"String", "int"};
+        String[] syntaxStrings = {"String", "int", "set", "get"};
         return Arrays.asList(syntaxStrings).contains(syntaxString);
     }
     

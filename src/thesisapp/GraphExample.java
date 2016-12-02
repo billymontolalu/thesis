@@ -8,22 +8,11 @@ package thesisapp;
 import com.jgraph.layout.JGraphFacade;
 import com.jgraph.layout.JGraphLayout;
 import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
-import com.mxgraph.layout.mxGraphLayout;
-import com.mxgraph.layout.mxOrganicLayout;
 import graphmodel.RelationshipEdge;
-import japa.parser.JavaParser;
-import japa.parser.ParseException;
-import japa.parser.ast.CompilationUnit;
-import japa.parser.ast.body.MethodDeclaration;
-import japa.parser.ast.visitor.VoidVisitorAdapter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JApplet;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -110,7 +99,7 @@ public class GraphExample extends javax.swing.JFrame {
         
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
-
+        
         // create a visualization using JGraph, via an adapter
         jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(g);
 
@@ -124,7 +113,7 @@ public class GraphExample extends javax.swing.JFrame {
         String v2 = "v2";
         String v3 = "v3";
         String v4 = "v4";
-
+        
         // add some sample data (graph manipulated via JGraphT)
         g.addVertex(v1);
         g.addVertex(v2);
@@ -137,6 +126,7 @@ public class GraphExample extends javax.swing.JFrame {
         g.addEdge(v3, v1);
         g.addEdge(v4, v3);
         g.addEdge(v4, v2);
+        
         
         DefaultGraphCell x = jgAdapter.getEdgeCell(g.getEdge(v1, v2));
         AttributeMap attrbute = x.getAttributes();

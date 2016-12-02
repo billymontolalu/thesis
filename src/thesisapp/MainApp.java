@@ -8,7 +8,10 @@ package thesisapp;
 import graphmodel.GraphProcess;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import model.Dataset;
@@ -24,7 +27,6 @@ public class MainApp extends javax.swing.JFrame {
      */
     public MainApp() {
         initComponents();
-
         //getParkiran();
     }
     
@@ -154,6 +156,16 @@ public class MainApp extends javax.swing.JFrame {
         JTable tablesii = new JTable( datasii, headers );
         jScrollPanesii.getViewport().removeAll();
         jScrollPanesii.getViewport().add(tablesii);
+        tablesii.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tablesii.rowAtPoint(evt.getPoint());
+                int col = tablesii.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    JOptionPane.showMessageDialog(rootPane, tablesii.getValueAt(row, col));
+                }
+            }
+        });
     }
     
     private void getParkiran()
@@ -302,6 +314,41 @@ public class MainApp extends javax.swing.JFrame {
                 }
                 return c; 
             } 
+        });
+        tablesii.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = tablesii.rowAtPoint(evt.getPoint());
+                int col = tablesii.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    JOptionPane.showMessageDialog(rootPane, row + " " + col);
+                }
+            }
+        });
+    }
+    
+    public enum Type {
+        SEMANTICINSERTINSERT
+    }
+    
+    private void setListener(JTable table, Type type)
+    {
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                if (row >= 0 && col >= 0) {
+                    JOptionPane.showMessageDialog(rootPane, row + " " + col);
+                }
+                switch(type)
+                {
+                    case SEMANTICINSERTINSERT:
+                        
+                    default:
+                        break;
+                }
+            }
         });
     }
 
