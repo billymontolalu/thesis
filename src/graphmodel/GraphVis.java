@@ -17,10 +17,15 @@ import model.Method;
  * @author Momo
  */
 public final class GraphVis {
-    public static void print(DirectedGraph dg){
+    public static String plantuml = "";
+    public static String print(DirectedGraph dg){
+        plantuml = "";
+        plantuml = plantuml + "@startuml\n";
         printEdge(dg);
         printNoEdge(dg);
         System.out.println("");
+        plantuml = plantuml + "@enduml";
+        return plantuml;
     }
     
     private static void printEdge(DirectedGraph dg){
@@ -32,20 +37,25 @@ public final class GraphVis {
             if(v1 instanceof Class && v2 instanceof Method)
             {
                 System.out.println(v1.getLabel() + " : " + v2.getLabel() + "()");
+                plantuml = plantuml + v1.getLabel() + " : " + v2.getLabel() + "()\n";
             }else if(v2 instanceof Class && v1 instanceof Method)
             {
                 System.out.println(v2.getLabel() + " : " + v1.getLabel() + "()");
+                plantuml = plantuml + v2.getLabel() + " : " + v1.getLabel() + "()\n";
             }
             else if(v2 instanceof Attribute && v1 instanceof Class)
             {
                 System.out.println(v1.getLabel() + " : " + v2.getLabel());
+                plantuml = plantuml + v1.getLabel() + " : " + v2.getLabel() + "\n";
             }
             else if(v1 instanceof Attribute && v2 instanceof Class)
             {
                 System.out.println(v2.getLabel() + " : " + v1.getLabel());
+                plantuml = plantuml + v2.getLabel() + " : " + v1.getLabel() + "\n";
             }else
             {
                 System.out.println(v1.getLabel() + " " + re.getLabel() + " " + v2.getLabel());
+                plantuml = plantuml + v1.getLabel() + " " + re.getLabel() + " " + v2.getLabel() + "\n";
             }
             
         }
@@ -57,6 +67,7 @@ public final class GraphVis {
             if(edge.isEmpty()){
                 Atom a = (Atom) vertex;
                 System.out.println(a.getLabel());
+                plantuml = plantuml + a.getLabel() + "\n";
             }
         }
     }

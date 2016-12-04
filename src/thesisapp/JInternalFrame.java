@@ -40,6 +40,7 @@ public class JInternalFrame extends javax.swing.JInternalFrame {
         applet.getContentPane().add(jgraph);
         applet.resize(new Dimension(530, 320));
         JGraphLayout layout = new JGraphHierarchicalLayout();
+        
         JGraphFacade facade = new JGraphFacade(jgraph);
         layout.run(facade);
         Map nested = facade.createNestedMap(false, false);

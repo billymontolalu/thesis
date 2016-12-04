@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Kerja/ThesisApp/src/graphmodel/Semantic.java</file>
-            <file>file:/E:/Kerja/ThesisApp/src/graphmodel/RelationshipEdge.java</file>
-            <file>file:/E:/Kerja/ThesisApp/src/graphmodel/SimilarityCalculationDemo.java</file>
-            <file>file:/E:/Kerja/ThesisApp/src/parkiran/case111.puml</file>
+            <file>file:/E:/Kerja/ThesisApp/src/thesisapp/MainApp.java</file>
+            <file>file:/E:/Kerja/ThesisApp/src/thesisapp/Detil.java</file>
+            <file>file:/E:/Kerja/ThesisApp/src/thesisapp/PlantInternalFrame.java</file>
+            <file>file:/E:/Kerja/ThesisApp/src/thesisapp/ThesisApp.java</file>
         </group>
     </open-files>
 </project-private>
