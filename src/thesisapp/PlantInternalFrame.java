@@ -66,6 +66,7 @@ public class PlantInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
 
+        setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
 

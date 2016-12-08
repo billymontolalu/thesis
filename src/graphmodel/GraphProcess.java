@@ -8,7 +8,6 @@ package graphmodel;
 import java.util.ArrayList;
 import java.util.List;
 import model.Atom;
-import model.Class;
 import model.RelatedAtom;
 import model.Relation;
 import org.jgrapht.DirectedGraph;
@@ -27,6 +26,15 @@ public class GraphProcess {
         this.v0 = v0;
         this.v1 = v1;
         this.v2 = v2;
+    }
+    
+    public boolean isConflict()
+    {
+        if(countInsertInsert() > 0 || countInsertDelete() > 0 || countDeleteInsert() > 0 || countDeleteDelete() > 0)
+        {
+            return true;
+        }
+        return false;
     }
     
     public List<RelatedAtom> getSemanticNode()

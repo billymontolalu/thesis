@@ -5,6 +5,7 @@
  */
 package thesisapp;
 
+import graphmodel.GraphProcess;
 import graphmodel.GraphVis;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -24,16 +25,6 @@ public class Detil extends javax.swing.JFrame {
      */
     public Detil(String caseName, int case1, int case2, JFrame parent) {
         initComponents();
-        /*JInternalFrame jf0 = new thesisapp.JInternalFrame();
-        jf0.setTitle("Version 0");
-        JInternalFrame jf1 = new thesisapp.JInternalFrame();
-        JInternalFrame jf2 = new thesisapp.JInternalFrame();
-        jDesktopPane1.add(jf0);
-        jDesktopPane1.add(jf1);
-        jDesktopPane1.add(jf2);
-        jf0.show();
-        jf1.show();
-        jf2.show();*/
         
         String caseBase = "";
         switch (caseName) {
@@ -46,6 +37,13 @@ public class Detil extends javax.swing.JFrame {
             default :
                 break;
         }
+        
+        Dataset app0 = new Dataset();
+        app0.readFile(caseName, caseBase + "0.puml");
+        String v0 = GraphVis.print(app0.getGraph());
+        PlantInternalFrame plantIf0 = new thesisapp.PlantInternalFrame("Case0", v0);
+        jDesktopPane1.add(plantIf0);
+        plantIf0.show();
         
         Dataset app1 = new Dataset();
         app1.readFile(caseName, caseBase + case1 + ".puml");
@@ -60,6 +58,28 @@ public class Detil extends javax.swing.JFrame {
         PlantInternalFrame plantIf2 = new thesisapp.PlantInternalFrame("Case" + case2, v2);
         jDesktopPane1.add(plantIf2);
         plantIf2.show();
+        
+        GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+        
+        // if jika conflict
+        if(gp.isConflict())
+        {
+            String conflict = "";
+            conflict = conflict + GraphVis.print(gp.getDeleteDelete());
+            conflict = conflict + GraphVis.print(gp.getDeleteInsert());
+            conflict = conflict + GraphVis.print(gp.getInsertDelete());
+            conflict = conflict + GraphVis.print(gp.getInsertInsert());
+            conflict = conflict + GraphVis.print(gp.getInsertInsertSemantic());
+            ConflictJInternalFrame cJf = new ConflictJInternalFrame(conflict);
+            jDesktopPane1.add(cJf);
+            cJf.show();
+        }else
+        {
+            String merge = GraphVis.print(gp.mergeSemantic());
+            PlantInternalFrame plantIfMerge = new thesisapp.PlantInternalFrame("Merge", merge);
+            jDesktopPane1.add(plantIfMerge);
+            plantIfMerge.show();
+        }
     }
     
     /**
