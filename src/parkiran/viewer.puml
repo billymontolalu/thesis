@@ -1,51 +1,30 @@
 @startuml
+ControlSystem : calculatePayment()
+ControlSystem : calculateTime()
+Driver : getTicket()
+Driver : payTicket()
+GateOperator : checkTicket()
+ParkingArea : getAreaNumber()
+Machine : giveTicket()
+Driver -- ControlSystem
+GateOperator -- ControlSystem
+ParkingArea -- ControlSystem
+Machine -- ControlSystem
 Camera : ip
+Camera : getPicture()
+Camera : getLicenseNumber()
+ControlSystem : printInvoice()
+ControlSystem : getPaid()
+ControlSystem : setPaid()
+ControlSystem : getPrice()
+Ticket : no
+Ticket : print()
+Ticket : getBarcode()
+Gate : status
 Gate : openGate()
 Gate : closeGate()
-Ticket
-Car
-numberLicense
-Date dateIn
-Date dateOut
-id
-getCapture
-setCapture
-id
-Date dateIn
-statusGate
-Employee
-id
-name
-checkValidateTicket
-Server
-getCaptureCamera
-calculatePrice
-TicketMachine
-printTicket
-Car|*..>|numberLicense
-Car|*..>|Date dateIn
-Car|*..>|Date dateOut
-Camera|*..>|id
-Camera|:|getCapture
-Camera|:|setCapture
-Ticket|*..>|id
-Ticket|*..>|Date dateIn
-Gate|*..>|statusGate
-Employee|*..>|id
-Employee|*..>|name
-Employee|:|checkValidateTicket
-Server|:|getCaptureCamera
-Server|:|calculatePrice
-TicketMachine|:|printTicket
-Car|-->|Ticket
-Car|-->|TicketMachine
-Car|-->|Employee
-Car|-->|Gate
-Employee|-->|Ticket
-Employee|-->|Server
-Employee|-->|Gate
-Camera|-->|Car
-Camera|-->|Server
-TicketMachine|--|>|Ticket
-TicketMachine|-->|Gate
+Gate : getStatus()
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
 @enduml

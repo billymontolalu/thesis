@@ -80,6 +80,8 @@ public class Detil extends javax.swing.JFrame {
             jDesktopPane1.add(plantIfMerge);
             plantIfMerge.show();
         }
+        System.out.println("");
+        GraphVis.print(gp.getX());
     }
     
     /**

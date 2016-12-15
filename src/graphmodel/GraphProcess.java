@@ -30,11 +30,7 @@ public class GraphProcess {
     
     public boolean isConflict()
     {
-        if(countInsertInsert() > 0 || countInsertDelete() > 0 || countDeleteInsert() > 0 || countDeleteDelete() > 0)
-        {
-            return true;
-        }
-        return false;
+        return countInsertInsert() > 0 || countInsertDelete() > 0 || countDeleteInsert() > 0 || countDeleteDelete() > 0;
     }
     
     public List<RelatedAtom> getSemanticNode()
@@ -414,6 +410,11 @@ public class GraphProcess {
                 {
                     moveTo = (Atom) i;
                 }
+            }
+            
+            if(moveFrom == null || moveTo == null)
+            {
+                continue;
             }
             
             moveTo.setLabel(moveFrom.getLabel() + "/" + moveTo.getLabel());
