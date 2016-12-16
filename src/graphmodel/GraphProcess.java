@@ -28,6 +28,15 @@ public class GraphProcess {
         this.v2 = v2;
     }
     
+    //bikin fungsi membandingkan kemiripan kelas simantic greedy based match
+    public void similarityMetric()
+    {
+        ArrayList matchClass = new ArrayList();
+        
+        //cek ada telpon gak
+        
+    }
+    
     public boolean isConflict()
     {
         return countInsertInsert() > 0 || countInsertDelete() > 0 || countDeleteInsert() > 0 || countDeleteDelete() > 0;

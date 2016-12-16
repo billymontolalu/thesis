@@ -6,18 +6,43 @@
 package model;
 
 import graphmodel.Semantic;
+import java.util.ArrayList;
 
 /**
  *
  * @author Momo
  */
 public class Class extends Atom {    
+    private Package parent;
+    private ArrayList<Attribute> attribute = new ArrayList<>();
+    private ArrayList<Method> method = new ArrayList<>();
+    
     public Class(){
         
     }
     
+    public void addAttribute(Attribute attribute)
+    {
+        this.attribute.add(attribute);
+    }
+    
+    public void addMethod(Method method)
+    {
+        this.method.add(method);
+    }
+    
     public Class(String className){
         this.setLabel(className);
+    }
+    
+    public void setParent(Package parent)
+    {
+        this.parent = parent;
+    }
+    
+    public Package getParent()
+    {
+        return this.parent;
     }
     
     @Override

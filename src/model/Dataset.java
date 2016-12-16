@@ -63,6 +63,7 @@ public class Dataset {
     {
         Class classMethod = find(className);
         Method method = new Method(methodName, classMethod);
+        classMethod.addMethod(method);
         graph.addVertex(method);
         graph.addEdge(classMethod, method, new RelationshipEdge(classMethod, method, EdgeVis.METHOD));
     }
@@ -71,6 +72,7 @@ public class Dataset {
     {
         Class classAttribute = find(className);
         Attribute attribute = new Attribute(attributeName, classAttribute);
+        classAttribute.addAttribute(attribute);
         graph.addVertex(attribute);
         graph.addEdge(classAttribute, attribute, new RelationshipEdge(classAttribute, attribute, EdgeVis.ATTRIBUTE));
     }
