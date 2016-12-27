@@ -38,4 +38,9 @@ public class Atom {
     {
         return false;
     }
+    
+    public double getSemanticScore(Object otherObject)
+    {
+        return 0.0;
+    }
 }

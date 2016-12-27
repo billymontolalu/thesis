@@ -12,6 +12,8 @@ package model;
 public class RelatedAtom {
     private Atom v0;
     private Atom v1;
+    private double score;
+    private boolean isSemantic = false;
     
     public RelatedAtom()
     {
@@ -49,6 +51,34 @@ public class RelatedAtom {
      */
     public void setV1(Atom v1) {
         this.v1 = v1;
+    }
+
+    /**
+     * @return the score
+     */
+    public double getScore() {
+        return score;
+    }
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    /**
+     * @return the isSemantic
+     */
+    public boolean isIsSemantic() {
+        return isSemantic;
+    }
+
+    /**
+     * @param isSemantic the isSemantic to set
+     */
+    public void setIsSemantic(boolean isSemantic) {
+        this.isSemantic = isSemantic;
     }
     
     

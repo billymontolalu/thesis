@@ -64,4 +64,20 @@ public class Attribute extends Atom {
         }
         return false; 
     }
+    
+    @Override
+    public double getSemanticScore(Object otherObject){
+        if(otherObject instanceof Attribute)
+        {
+            Attribute c = (Attribute) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return 1;
+            }
+            
+            Semantic s = new Semantic();
+            return s.calculateWuPath(this.getLabel(), c.getLabel());
+        }
+        return 0;
+    }
 }

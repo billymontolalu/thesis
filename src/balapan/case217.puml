@@ -1,0 +1,30 @@
+@startuml
+Vehicle : String colour
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : getCollision()
+Vehicle : setBonus()
+Vehicle : getAvailable()
+Vehicle : getMoney()
+Vehicle : setSpeed()
+Collision : minusPoin()
+FourWheel : getAvailablePassenger()
+Passenger : int weight
+Bicycle : int wheelSize
+MotorVehicle : String engineType
+Car : nosValue
+FourWheel --|> MotorVehicle
+Truck --|> FourWheel
+Car --|> FourWheel
+TwoWheel --|> MotorVehicle
+Bicycle --|> Vehicle
+Vehicle -- Passenger
+MotorVehicle --|> Vehicle
+People --|> Collision
+Facility --|> Collision
+Vehicle --> Collision
+@enduml

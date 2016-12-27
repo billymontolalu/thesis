@@ -60,4 +60,20 @@ public class Method extends Atom{
         }
         return false; 
     }
+    
+    @Override
+    public double getSemanticScore(Object otherObject){
+        if(otherObject instanceof Method)
+        {
+            Method c = (Method) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return 1;
+            }
+            
+            Semantic s = new Semantic();
+            return s.calculateWuPath(this.getLabel(), c.getLabel());
+        }
+        return 0;
+    }
 }

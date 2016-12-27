@@ -7,6 +7,7 @@ package thesisapp;
 
 import graphmodel.GraphProcess;
 import graphmodel.GraphVis;
+import graphmodel.Semantic;
 import model.Dataset;
 
 /**
@@ -49,20 +50,22 @@ public class ThesisApp {
             System.out.println();
         }*/
         
-        Dataset app0 = new Dataset();
-        app0.readFile("parkiran", "case10.puml");
-
-        Dataset app1 = new Dataset();
-        app1.readFile("parkiran", "case111.puml");
-
-        Dataset app2 = new Dataset();
-        app2.readFile("parkiran", "case18.puml");
-        
-        GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-        GraphVis.print(gp.getC1());
+//        Dataset app0 = new Dataset();
+//        app0.readFile("parkiran", "case10.puml");
+//
+//        Dataset app1 = new Dataset();
+//        app1.readFile("parkiran", "case111.puml");
+//
+//        Dataset app2 = new Dataset();
+//        app2.readFile("parkiran", "case18.puml");
+//        
+//        GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
+//        GraphVis.print(gp.getC1());
         //System.out.println("");
         //GraphVis.print(gp.mergeSemantic());
         //System.out.println(gp.getX());
+        Semantic s = new Semantic();
+        System.out.println(s.calculateWuPath("quadrangle", "quadrangle"));
     }
 
 }
