@@ -39,7 +39,7 @@ public class Attribute extends Atom {
         if(otherObject instanceof Attribute)
         {
             Attribute c = (Attribute) otherObject;
-            if(this.getLabel().equals(c.getLabel()))
+            if(this.getLabel().equals(c.getLabel()) && c.getParent().equals(this.parent))
             {
                 return true;
             }

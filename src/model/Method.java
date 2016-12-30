@@ -34,7 +34,7 @@ public class Method extends Atom{
         if(otherObject instanceof Method)
         {
             Method c = (Method) otherObject;
-            if(this.getLabel().equals(c.getLabel()))
+            if(this.getLabel().equals(c.getLabel()) && this.parent.equals(c.getParent()) )
             {
                 return true;
             }

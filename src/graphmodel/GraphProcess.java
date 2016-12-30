@@ -584,12 +584,12 @@ public class GraphProcess {
         for(Object e: dg.edgeSet())
         {
             RelationshipEdge re = (RelationshipEdge) e;
-            if(searchOnVertex(dg, re.getV1()) == null)
+            if(searchOnVertex(normalisasi, re.getV1()) == null)
             {
                 normalisasi.addVertex(re.getV1());
             }
             
-            if(searchOnVertex(dg, re.getV2()) == null)
+            if(searchOnVertex(normalisasi, re.getV2()) == null)
             {
                 normalisasi.addVertex(re.getV2());
             }

@@ -33,6 +33,7 @@ public class MainApp extends javax.swing.JFrame {
     
     private void getBalapan()
     {
+        int count_case = 17;
         Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
         Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
@@ -45,12 +46,12 @@ public class MainApp extends javax.swing.JFrame {
         
         Vector<String> headers = new Vector<String>();
         headers.add(" ");
-        for (int x = 1; x < 13; x++)
+        for (int x = 1; x <= count_case; x++)
         {
             headers.add(Integer.toString(x));
         }
         
-        for (int x = 1; x < 13; x++) {
+        for (int x = 1; x <= count_case; x++) {
             //tanpa semantic
             Vector<Object> rowdd = new Vector<Object>();
             rowdd.add(Integer.toString(x));
@@ -77,7 +78,7 @@ public class MainApp extends javax.swing.JFrame {
             Vector<Object> rowsii = new Vector<Object>();
             rowsii.add(Integer.toString(x));
             
-            for (int y = 1; y < 13; y++) {
+            for (int y = 1; y <= count_case; y++) {
                 Dataset app0 = new Dataset();
                 app0.readFile("balapan", "case20.puml");
 
@@ -157,13 +158,32 @@ public class MainApp extends javax.swing.JFrame {
         JTable tablesii = new JTable( datasii, headers );
         jScrollPanesii.getViewport().removeAll();
         jScrollPanesii.getViewport().add(tablesii);
+        tablesii.setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean   isSelected, boolean hasFocus, int row, int column) 
+            { 
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); 
+                //int score = (int) tableii.getModel().getValueAt(row, column);
+                
+                if (!table.isRowSelected(row))
+                {
+                    if(!value.equals(tableii.getModel().getValueAt(row, column))){
+                        c.setBackground(new java.awt.Color(239, 255, 0));
+                    }
+                    else
+                        c.setBackground(table.getBackground());
+                }
+                return c; 
+            } 
+        });
+        JFrame jFrame = this;
         tablesii.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = tablesii.rowAtPoint(evt.getPoint());
                 int col = tablesii.columnAtPoint(evt.getPoint());
                 if (row >= 0 && col >= 0) {
-                    JOptionPane.showMessageDialog(rootPane, tablesii.getValueAt(row, col));
+                    Detil detil = new Detil(jLabelStudiKasus.getText(), (row+1), col, jFrame);
+                    detil.setVisible(true);
                 }
             }
         });

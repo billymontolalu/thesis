@@ -79,8 +79,8 @@ public class Semantic {
                 {
                     RelatednessCalculator path = new Path(db);
                     RelatednessCalculator wup = new WuPalmer(db);
-                    double wupScore = wup.calcRelatednessOfWords(word1, word2);
-                    double pathScore = path.calcRelatednessOfWords(word1, word2);
+                    double wupScore = wup.calcRelatednessOfWords(w1, w2);
+                    double pathScore = path.calcRelatednessOfWords(w1, w2);
                     double s = (wupScore + pathScore)/2;
                     if(s > max)
                     {
@@ -103,7 +103,7 @@ public class Semantic {
     
     public boolean isSimiliar(String word1, String word2)
     {
-        double distance = compute(word1, word2);
+        double distance = calculateWuPath(word1, word2);
         return distance >= threshold;
     }
     
@@ -153,5 +153,10 @@ public class Semantic {
     {
      
         
+    }
+    
+    public static void main(String[] args){
+        Semantic s = new Semantic();
+        System.out.println(s.calculateWuPath("getType", "turnRight"));
     }
 }
