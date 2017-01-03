@@ -1,0 +1,24 @@
+@startuml
+Vehicle : String policeNo
+
+Camera : String ip
+Camera : getPicture()
+
+ControlSystem : printInvoice()
+ControlSystem : setPaid()
+ControlSystem : saveData()
+ControlSystem : getData()
+ControlSystem : countCharge()
+
+Ticket : String no
+Ticket : time
+Ticket : getBarcode()
+
+Gate : openGate()
+Gate : closeGate()
+
+Camera -- ControlSystem
+Gate -- ControlSystem
+Ticket -- ControlSystem
+Vehicle -- ControlSystem
+@enduml

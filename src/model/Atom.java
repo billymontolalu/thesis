@@ -5,6 +5,8 @@
  */
 package model;
 
+import graphmodel.Semantic;
+
 /**
  *
  * @author Momo
@@ -41,6 +43,17 @@ public class Atom {
     
     public double getSemanticScore(Object otherObject)
     {
-        return 0.0;
+        if(otherObject instanceof Atom)
+        {
+            Atom c = (Atom) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return 1;
+            }
+            
+            Semantic s = new Semantic();
+            return s.calculateWuPath(this.getLabel(), c.getLabel());
+        }
+        return 0;
     }
 }

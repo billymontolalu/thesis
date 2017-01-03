@@ -12,6 +12,8 @@ import edu.cmu.lti.ws4j.impl.Path;
 import edu.cmu.lti.ws4j.impl.WuPalmer;
 import edu.cmu.lti.ws4j.util.WS4JConfiguration;
 import java.util.ArrayList;
+import java.util.Collections;
+import model.Atom;
 import model.Method;
 import model.Class;
 import model.RelatedAtom;
@@ -23,17 +25,10 @@ import model.SyntaxString;
  */
 public class Semantic {
     private static final ILexicalDatabase db = new NictWordNet();
-    private static final double threshold = 0.7;
-    
-    /*private String splitCamelCase(String word)
-    {
-        String wordSplit = "";
-        for (String w : word.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"))
-        {
-            wordSplit = wordSplit + w + " ";
-        }
-        return wordSplit.trim();
-    }*/
+    public static final double threshold = 0.5;
+    public static final double classThreshold = 0.5;
+    public static final double methodThreshold = 0.3;
+    public static final double attributeThreshold = 0.2;
     
     private String[] splitCamelCase(String word)
     {
@@ -155,8 +150,70 @@ public class Semantic {
         
     }
     
+    //bikin fungsi membandingkan kemiripan simantic greedy based match
+    public double similarityMetric(ArrayList v0, ArrayList v1)
+    {
+        ArrayList<RelatedAtom> raList = new ArrayList<>();
+        ArrayList<Atom> v00;
+        ArrayList<Atom> v01;
+        if(v0.size() < v1.size())
+        {
+            v00 = v0;
+            v01 = v1;
+        }else
+        {
+            v00 = v1;
+            v01 = v0;
+        }
+        for(Atom a : v00)
+        {
+            for(Atom b : v01)
+            {
+                double score = a.getSemanticScore(b);
+                RelatedAtom ra = new RelatedAtom(a, b);
+                ra.setScore(score);
+                raList.add(ra);
+            }
+        }
+        
+        Collections.sort(raList, (RelatedAtom o1, RelatedAtom o2) -> Double.compare(o2.getScore(), o1.getScore()));
+        
+        ArrayList<Atom> comparedx = new ArrayList<Atom>();
+        ArrayList<Atom> comparedy = new ArrayList<Atom>();
+        //todo : cari nilai rata2 score
+        double total = 0;
+        for(RelatedAtom a : raList)
+        {
+            if(!comparedx.contains(a.getV0()))
+            {
+                if(!comparedy.contains(a.getV1()))
+                {
+                    total = total + a.getScore();
+                    comparedy.add(a.getV1());
+                    comparedx.add(a.getV0());
+                }
+            }
+        }
+
+        double rata = 0;
+        rata = total/v00.size();
+        return rata;
+    }
+    
     public static void main(String[] args){
+        ArrayList<Atom> al = new ArrayList<>();
+        ArrayList<Atom> bl = new ArrayList<>();
+        Atom a = new Atom("Human");
+        Atom e = new Atom("man");
+        Atom b = new Atom("People");
+        Atom c = new Atom("Girl");
+        Atom d = new Atom("Woman");
+        al.add(c);
+        al.add(e);
+        bl.add(d);
+        bl.add(a);
+        bl.add(b);
         Semantic s = new Semantic();
-        System.out.println(s.calculateWuPath("getType", "turnRight"));
+        System.out.println(s.similarityMetric(al, bl));
     }
 }

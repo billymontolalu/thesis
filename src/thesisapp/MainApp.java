@@ -6,10 +6,7 @@
 package thesisapp;
 
 import graphmodel.GraphProcess;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,7 +30,7 @@ public class MainApp extends javax.swing.JFrame {
     
     private void getBalapan()
     {
-        int count_case = 17;
+        int count_case = 30;
         Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
         Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
@@ -191,6 +188,7 @@ public class MainApp extends javax.swing.JFrame {
     
     private void getParkiran()
     {
+        int count_case = 30;
         Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
         Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
@@ -203,12 +201,12 @@ public class MainApp extends javax.swing.JFrame {
         
         Vector<String> headers = new Vector<String>();
         headers.add(" ");
-        for (int x = 1; x < 15; x++)
+        for (int x = 1; x <= count_case; x++)
         {
             headers.add(Integer.toString(x));
         }
         
-        for (int x = 1; x < 15; x++) {
+        for (int x = 1; x <= count_case; x++) {
             Vector<Object> rowdd = new Vector<Object>();
             rowdd.add(Integer.toString(x));
             
@@ -234,7 +232,7 @@ public class MainApp extends javax.swing.JFrame {
             Vector<Object> rowsii = new Vector<Object>();
             rowsii.add(Integer.toString(x));
             
-            for (int y = 1; y < 15; y++) {
+            for (int y = 1; y <= count_case; y++) {
                 Dataset app0 = new Dataset();
                 app0.readFile("parkiran", "case10.puml");
 
@@ -463,16 +461,20 @@ public class MainApp extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(445, 445, 445)
-                        .addComponent(jLabelStudiKasus, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(438, 438, 438)
+                        .addComponent(jLabelStudiKasus, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -28,15 +28,6 @@ public class GraphProcess {
         this.v2 = v2;
     }
     
-    //bikin fungsi membandingkan kemiripan kelas simantic greedy based match
-    public void similarityMetric()
-    {
-        ArrayList matchClass = new ArrayList();
-        
-        //cek ada telpon gak
-        
-    }
-    
     public boolean isConflict()
     {
         return countInsertInsert() > 0 || countInsertDelete() > 0 || countDeleteInsert() > 0 || countDeleteDelete() > 0;
@@ -85,11 +76,19 @@ public class GraphProcess {
                 Atom n2 = (Atom) node2;
                 if(n1.equals(n2))
                 {
-                    dg.addVertex(n1);
+                    if(!dg.containsVertex(n1))
+                        dg.addVertex(n1);
+                    if(!dg.containsVertex(n2))
+                        dg.addVertex(n2);
+                    dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--"));
                 }
                 else if(n1.equalSemantic(n2))
                 {
-                    dg.addVertex(n1);
+                    if(!dg.containsVertex(n1))
+                        dg.addVertex(n1);
+                    if(!dg.containsVertex(n2))
+                        dg.addVertex(n2);
+                    dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--|>"));
                 }
             }
         }

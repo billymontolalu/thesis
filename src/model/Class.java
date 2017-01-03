@@ -90,11 +90,16 @@ public class Class extends Atom {
             {
                 return false;
             }
-            
-            if(s.isSimiliar(this.getLabel(), c.getLabel()))
+            //s.similarityMetric(method, method);
+            double score = this.getSemanticScore(otherObject);
+            if(score >= Semantic.threshold)
             {
                 return true;
             }
+            /*if(s.isSimiliar(this.getLabel(), c.getLabel()))
+            {
+                return true;
+            }*/
         }
         return false; 
     }
@@ -161,8 +166,33 @@ public class Class extends Atom {
         return related;
     }
     
-    public void getAttributeScore()
-    {
-        
+    @Override
+    public double getSemanticScore(Object otherObject){
+        if(otherObject instanceof Class)
+        {
+            Class c = (Class) otherObject;
+            if(this.getLabel().equals(c.getLabel()))
+            {
+                return 1;
+            }
+            
+            Semantic s = new Semantic();
+            double attributeScore = 1;
+            double methodScore = 1;
+            if(this.getAttribute().size() > 0 && c.getAttribute().size() > 0)
+            {
+                attributeScore = s.similarityMetric(this.getAttribute(), c.getAttribute());
+            }
+            
+            if(this.getMethod().size() > 0 && c.getMethod().size() > 0)
+            {
+                methodScore = s.similarityMetric(this.getMethod(), c.getMethod());
+            }
+            
+            double classScore = s.calculateWuPath(this.getLabel(), c.getLabel());
+            double similarityScore = Semantic.classThreshold*classScore + Semantic.attributeThreshold*attributeScore + Semantic.methodThreshold*methodScore;
+            return similarityScore;
+        }
+        return 0;
     }
 }

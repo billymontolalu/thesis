@@ -1,0 +1,33 @@
+@startuml
+Vehicle : String color
+Vehicle : int speed
+Vehicle : int weight
+Vehicle : int passenger
+Vehicle : int maxWeight
+Vehicle : int money
+Vehicle : turnLeft()
+Vehicle : turnRight()
+Vehicle : detectCollision()
+Vehicle : brake()
+Vehicle : startEngine()
+Vehicle : run()
+Engine : NOS
+Engine : int wheel
+Engine : machineType
+Engineless : int type
+Engineless : int wheel
+Engineless : int wheelsize
+Race : id
+Race : map
+Race : level
+Race : startRace()
+Race : setLevel()
+Race -- Vehicle
+Obstacle : position
+Obstacle : damageLevel
+Passenger : int minusSpeed
+Person --|> Obstacle
+Facility --|> Obstacle
+EngineLess --|> Vehicle
+Engine --|> Vehicle
+@enduml

@@ -8,7 +8,6 @@ package thesisapp;
 import graphmodel.GraphProcess;
 import graphmodel.GraphVis;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import model.Dataset;
 
 /**
@@ -65,10 +64,15 @@ public class Detil extends javax.swing.JFrame {
         if(gp.isConflict())
         {
             String conflict = "";
+            conflict = conflict + "Delete-Delete\n";
             conflict = conflict + GraphVis.print(gp.getDeleteDelete());
+            conflict = conflict + "\nDelete-Insert\n";
             conflict = conflict + GraphVis.print(gp.getDeleteInsert());
+            conflict = conflict + "\nInsert-Delete\n";
             conflict = conflict + GraphVis.print(gp.getInsertDelete());
+            conflict = conflict + "\nInsert-Insert\n";
             conflict = conflict + GraphVis.print(gp.getInsertInsert());
+            conflict = conflict + "\nInsert-Insert Semantic\n";
             conflict = conflict + GraphVis.print(gp.getInsertInsertSemantic());
             ConflictJInternalFrame cJf = new ConflictJInternalFrame(conflict);
             jDesktopPane1.add(cJf);
