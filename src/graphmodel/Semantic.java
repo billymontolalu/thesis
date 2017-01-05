@@ -5,14 +5,19 @@
  */
 package graphmodel;
 
+import edu.cmu.lti.jawjaw.pobj.POS;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Path;
 import edu.cmu.lti.ws4j.impl.WuPalmer;
 import edu.cmu.lti.ws4j.util.WS4JConfiguration;
+import edu.washington.cs.knowitall.morpha.MorphaStemmer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import model.Atom;
 import model.Method;
 import model.Class;
@@ -24,170 +29,240 @@ import model.SyntaxString;
  * @author Momo
  */
 public class Semantic {
+
     private static final ILexicalDatabase db = new NictWordNet();
-    public static final double threshold = 0.5;
+    public static final double threshold = 0.6;
     public static final double classThreshold = 0.5;
     public static final double methodThreshold = 0.3;
     public static final double attributeThreshold = 0.2;
-    
-    private String[] splitCamelCase(String word)
-    {
+    private OpenNLPSingleton nlp = null;
+    private final Set<String> stopWords = new HashSet<String>();
+    private RelatednessCalculator rc;
+
+    public double computeSentenceSimilarity(String sentence1, String sentence2) {
+        String[] split1 = splitCamelCase(sentence1);
+        String[] split2 = splitCamelCase(sentence2);
+        
+        sentence1 = "";
+        sentence2 = "";
+        for(String ws1 : split1)
+        {
+            sentence1 = sentence1 + ws1 + " ";
+        }
+        
+        for(String ws2 : split2)
+        {
+            sentence2 = sentence2 + ws2 + " ";
+        }
+        
+        sentence1 = sentence1.trim();
+        sentence2 = sentence2.trim();
+        
+        WS4JConfiguration conf = WS4JConfiguration.getInstance();
+        conf.setMFS(false);
+        rc = new WuPalmer(db);
+        nlp = OpenNLPSingleton.INSTANCE;
+        String[] words1 = nlp.tokenize(sentence1);
+        String[] words2 = nlp.tokenize(sentence2);
+
+        String[] postag1 = nlp.postag(words1);
+        String[] postag2 = nlp.postag(words2);
+
+        List<Double> simScores = new ArrayList<Double>();
+        for (int i = 0; i < words1.length; i++) {
+            if (!stopWords.contains(words1[i])) {
+                String pt1 = postag1[i];
+                String w1 = MorphaStemmer.stemToken(words1[i].toLowerCase(), pt1);
+                POS p1 = mapPOS(pt1);
+
+                Double maxSim = -1.0;
+                if (p1 != null) {
+                    for (int j = 0; j < words2.length; j++) {
+                        if (!stopWords.contains(words2[j])) {
+                            String pt2 = postag2[j];
+                            String w2 = MorphaStemmer.stemToken(words2[j].toLowerCase(), pt2);
+                            POS p2 = mapPOS(pt2);
+
+                            if (p2 != null) {
+                                double sim = rc.calcRelatednessOfWords(w1 + "#" + p1, w2 + "#" + p1);
+                                if(sim > 1)
+                                {
+                                    sim = 1;
+                                }
+                                if (sim > maxSim) {
+                                    maxSim = sim;
+                                }
+                                System.out.println(w1 + ", " + w2 + ": " + sim);
+                            }
+                        }
+                    }
+                }
+
+                if (maxSim > -1.0) {
+                    //maxSim =  new Long(Math.round(maxSim)).doubleValue();
+                    simScores.add(maxSim);
+                }
+            }
+        }
+        System.out.println(simScores);
+        return calculateMean(simScores);
+    }
+
+    private static POS mapPOS(String pennTreePosTag) {
+        if (pennTreePosTag.indexOf("NN") == 0) {
+            return POS.n;
+        }
+        if (pennTreePosTag.indexOf("VB") == 0) {
+            return POS.v;
+        }
+        if (pennTreePosTag.indexOf("JJ") == 0) {
+            return POS.a;
+        }
+        if (pennTreePosTag.indexOf("RB") == 0) {
+            return POS.r;
+        }
+        return null;
+    }
+
+    private double calculateMean(List<Double> scores) {
+        Double sum = 0.0;
+        if (!scores.isEmpty()) {
+            for (Double mark : scores) {
+                sum += mark;
+            }
+            return sum / scores.size();
+        }
+        return sum;
+    }
+
+    private String[] splitCamelCase(String word) {
         return word.trim().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
     }
-    
+
     public double compute(String word1, String word2) {
         String[] words1 = splitCamelCase(word1);
         String[] words2 = splitCamelCase(word2);
         double max = 0.0;
         WS4JConfiguration.getInstance().setMFS(true);
-        for(String w1 : words1)
-        {
-            for(String w2 : words2)
-            {
-                if(!SyntaxString.isSyntaxString(w1) && !SyntaxString.isSyntaxString(w2))
-                {
+        for (String w1 : words1) {
+            for (String w2 : words2) {
+                if (!SyntaxString.isSyntaxString(w1) && !SyntaxString.isSyntaxString(w2)) {
                     double s = new WuPalmer(db).calcRelatednessOfWords(w1.trim(), w2.trim());
-                    if(s > max)
-                    {
+                    if (s > max) {
                         max = s;
                     }
                 }
-                
+
             }
         }
-        
+
         return max;
     }
-    
-    public double calculateWuPath(String word1, String word2)
-    {
-        String[] words1 = splitCamelCase(word1);
+
+    public double calculateWuPath(String word1, String word2) {
+        return computeSentenceSimilarity(word1, word2);
+        /*String[] words1 = splitCamelCase(word1);
         String[] words2 = splitCamelCase(word2);
         double max = 0.0;
-        
+
         WS4JConfiguration.getInstance().setMFS(true);
-        for(String w1 : words1)
-        {
-            for(String w2 : words2)
-            {
-                if(!SyntaxString.isSyntaxString(w1) && !SyntaxString.isSyntaxString(w2))
-                {
+        for (String w1 : words1) {
+            for (String w2 : words2) {
+                if (!SyntaxString.isSyntaxString(w1) && !SyntaxString.isSyntaxString(w2)) {
                     RelatednessCalculator path = new Path(db);
                     RelatednessCalculator wup = new WuPalmer(db);
                     double wupScore = wup.calcRelatednessOfWords(w1, w2);
                     double pathScore = path.calcRelatednessOfWords(w1, w2);
-                    double s = (wupScore + pathScore)/2;
-                    if(s > max)
-                    {
+                    double s = (wupScore + pathScore) / 2;
+                    if (s > max) {
                         max = s;
                     }
                 }
-                
+
             }
         }
         return max;
+        */
     }
-    
+
     /*private double compute(String word1, String word2) {
-        word1 = splitCamelcase(word1);
-        word2 = splitCamelcase(word2);
-        WS4JConfiguration.getInstance().setMFS(true);
-        double s = new WuPalmer(db).calcRelatednessOfWords(word1, word2);
-        return s;
-    }*/
-    
-    public boolean isSimiliar(String word1, String word2)
-    {
+     word1 = splitCamelcase(word1);
+     word2 = splitCamelcase(word2);
+     WS4JConfiguration.getInstance().setMFS(true);
+     double s = new WuPalmer(db).calcRelatednessOfWords(word1, word2);
+     return s;
+     }*/
+    public boolean isSimiliar(String word1, String word2) {
         double distance = calculateWuPath(word1, word2);
         return distance >= threshold;
     }
-    
-    public void compareClass(Class v0, Class v1)
-    {
-        
+
+    public void compareClass(Class v0, Class v1) {
+
     }
-    
-    public void compareMethod(Class v0, Class v1)
-    {
+
+    public void compareMethod(Class v0, Class v1) {
         ArrayList<RelatedAtom> related = new ArrayList<RelatedAtom>();
         ArrayList<Method> m0 = v0.getMethod();
         ArrayList<Method> m1 = v1.getMethod();
-        if(m0.size() > m1.size())
-        {
-            for(int x=0; x<m0.size(); x++)
-            {
+        if (m0.size() > m1.size()) {
+            for (int x = 0; x < m0.size(); x++) {
                 String sv0 = m0.get(x).getLabel();
-                for(int y=0; y<m1.size(); y++)
-                {
+                for (int y = 0; y < m1.size(); y++) {
                     double score = 0.0;
                     String sv1 = m1.get(y).getLabel();
-                    if(sv0.equals(sv1))
-                    {
+                    if (sv0.equals(sv1)) {
                         score = 1;
                         RelatedAtom ra = new RelatedAtom();
                         ra.setV0(v0);
                         ra.setV1(v0);
-                    }
-                    else
-                    {
+                    } else {
                         score = calculateWuPath(sv0, sv1);
-                        if(score >= threshold)
-                        {
-                        }else
-                        {
-                            
+                        if (score >= threshold) {
+                        } else {
+
                         }
                     }
                 }
             }
         }
-        
+
     }
-    
-    public void compareAttribute(Class v0, Class v1)
-    {
-     
-        
+
+    public void compareAttribute(Class v0, Class v1) {
+
     }
-    
+
     //bikin fungsi membandingkan kemiripan simantic greedy based match
-    public double similarityMetric(ArrayList v0, ArrayList v1)
-    {
+    public double similarityMetric(ArrayList v0, ArrayList v1) {
         ArrayList<RelatedAtom> raList = new ArrayList<>();
         ArrayList<Atom> v00;
         ArrayList<Atom> v01;
-        if(v0.size() < v1.size())
-        {
+        if (v0.size() < v1.size()) {
             v00 = v0;
             v01 = v1;
-        }else
-        {
+        } else {
             v00 = v1;
             v01 = v0;
         }
-        for(Atom a : v00)
-        {
-            for(Atom b : v01)
-            {
+        for (Atom a : v00) {
+            for (Atom b : v01) {
                 double score = a.getSemanticScore(b);
                 RelatedAtom ra = new RelatedAtom(a, b);
                 ra.setScore(score);
                 raList.add(ra);
             }
         }
-        
+
         Collections.sort(raList, (RelatedAtom o1, RelatedAtom o2) -> Double.compare(o2.getScore(), o1.getScore()));
-        
+
         ArrayList<Atom> comparedx = new ArrayList<Atom>();
         ArrayList<Atom> comparedy = new ArrayList<Atom>();
         //todo : cari nilai rata2 score
         double total = 0;
-        for(RelatedAtom a : raList)
-        {
-            if(!comparedx.contains(a.getV0()))
-            {
-                if(!comparedy.contains(a.getV1()))
-                {
+        for (RelatedAtom a : raList) {
+            if (!comparedx.contains(a.getV0())) {
+                if (!comparedy.contains(a.getV1())) {
                     total = total + a.getScore();
                     comparedy.add(a.getV1());
                     comparedx.add(a.getV0());
@@ -196,12 +271,12 @@ public class Semantic {
         }
 
         double rata = 0;
-        rata = total/v00.size();
+        rata = total / v00.size();
         return rata;
     }
-    
-    public static void main(String[] args){
-        ArrayList<Atom> al = new ArrayList<>();
+
+    public static void main(String[] args) {
+        /*ArrayList<Atom> al = new ArrayList<>();
         ArrayList<Atom> bl = new ArrayList<>();
         Atom a = new Atom("Human");
         Atom e = new Atom("man");
@@ -214,6 +289,9 @@ public class Semantic {
         bl.add(a);
         bl.add(b);
         Semantic s = new Semantic();
-        System.out.println(s.similarityMetric(al, bl));
+        System.out.println(s.similarityMetric(al, bl));*/
+        Semantic s = new Semantic();
+        double x = s.computeSentenceSimilarity("getLicenseNumber", "getPlateNumber");
+        System.out.println(x);
     }
 }

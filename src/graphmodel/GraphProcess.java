@@ -80,7 +80,6 @@ public class GraphProcess {
                         dg.addVertex(n1);
                     if(!dg.containsVertex(n2))
                         dg.addVertex(n2);
-                    dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--"));
                 }
                 else if(n1.equalSemantic(n2))
                 {
@@ -88,7 +87,8 @@ public class GraphProcess {
                         dg.addVertex(n1);
                     if(!dg.containsVertex(n2))
                         dg.addVertex(n2);
-                    dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--|>"));
+                    if(!dg.containsEdge(n1, n2))
+                        dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--|>"));
                 }
             }
         }
