@@ -1,0 +1,11 @@
+@startuml
+Patient : name
+Employee : name
+Doctor --|> Employee
+Nurse --|> Employee
+Staff --|> Employee
+Pharmacist --|> Employee
+Medicine : name
+MedicalTreatment : 
+MedicalRecord : 
+@enduml

@@ -84,8 +84,8 @@ public class Detil extends javax.swing.JFrame {
             jDesktopPane1.add(plantIfMerge);
             plantIfMerge.show();
         }
-        System.out.println("");
-        GraphVis.print(gp.getX());
+        //System.out.println("");
+        //GraphVis.print(gp.getX());
     }
     
     /**
@@ -162,6 +162,7 @@ public class Detil extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 //new Detil().setVisible(true);
             }

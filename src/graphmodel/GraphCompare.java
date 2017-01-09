@@ -375,7 +375,7 @@ public class GraphCompare {
                 dg.addVertex(a2);
             }
         }
-        for(Object vertex1 : getV1().vertexSet())
+        /*for(Object vertex1 : getV1().vertexSet())
         {
             found = false;
             Atom a1 = (Atom) vertex1;
@@ -391,7 +391,7 @@ public class GraphCompare {
             {
                 dg.addVertex(a1);
             }
-        }
+        }*/
         return dg;
     }
 

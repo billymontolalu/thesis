@@ -61,6 +61,7 @@ public class GraphProcess {
     
     public DirectedGraph getInsertInsertSemantic()
     {
+        ArrayList<RelatedAtom> raList = new ArrayList<RelatedAtom>();
         DirectedGraph dg = new DirectedMultigraph<>(
                     new ClassBasedEdgeFactory<Object, RelationshipEdge>(RelationshipEdge.class));
         GraphCompare gc1 = new GraphCompare(v0, v1);
@@ -76,13 +77,18 @@ public class GraphProcess {
                 Atom n2 = (Atom) node2;
                 if(n1.equals(n2))
                 {
-                    if(!dg.containsVertex(n1))
+                    /*if(!dg.containsVertex(n1))
                         dg.addVertex(n1);
                     if(!dg.containsVertex(n2))
-                        dg.addVertex(n2);
+                        dg.addVertex(n2);*/
                 }
                 else if(n1.equalSemantic(n2))
                 {
+                    /*double score = n1.getSemanticScore(n2);
+                    RelatedAtom ra = new RelatedAtom();
+                    ra.setScore(score);
+                    ra.setV0(n1);
+                    ra.setV1(n2);*/
                     if(!dg.containsVertex(n1))
                         dg.addVertex(n1);
                     if(!dg.containsVertex(n2))
@@ -216,7 +222,7 @@ public class GraphProcess {
     {
         DirectedGraph dg = getInsertInsertSemantic();
         int count = 0;
-        for(Object x : dg.vertexSet())
+        for(Object x : dg.edgeSet())
         {
             count ++;
         }
@@ -425,7 +431,7 @@ public class GraphProcess {
                 continue;
             }
             
-            moveTo.setLabel(moveFrom.getLabel() + "/" + moveTo.getLabel());
+            moveTo.setLabel(moveFrom.getLabel() + "vs" + moveTo.getLabel());
             for(Object edge : x.edgesOf(moveFrom))
             {
                 RelationshipEdge rel = (RelationshipEdge) edge;

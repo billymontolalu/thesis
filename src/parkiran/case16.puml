@@ -21,7 +21,7 @@ Parking : Image parkingImage
 Parking : setVehicle()
 Parking : setTicket()
 Parking : setImage()
-Camera : int camera_id
+Camera : int cameraId
 Camera : capture()
 Camera : Image getImage()
 Parking -- ParkingController
