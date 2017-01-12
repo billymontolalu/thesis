@@ -1,12 +1,13 @@
 @startuml
 Vehicle : int number
-Vehicle : DateTime timeIn
-Vehicle : DateTime timeOut
 
 Camera : String ip
 Camera : getPicture()
 Camera : getLicenseNumber()
 
+ControlSystem : DateTime timeIn
+ControlSystem : DateTime timeOut
+ControlSystem : calculateDeltaTime()
 ControlSystem : printInvoice()
 ControlSystem : getPaid()
 ControlSystem : setPaid()

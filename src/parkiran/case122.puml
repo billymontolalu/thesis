@@ -1,4 +1,8 @@
 @startuml
+ParkedMachine : openGate()
+ParkedMachine : closeGate()
+ParkedMachine : printReceipt()
+
 Vehicle : int number
 Vehicle : DateTime timeIn
 Vehicle : DateTime timeOut
@@ -16,13 +20,8 @@ Ticket : String no
 Ticket : print()
 Ticket : getBarcode()
 
-Gate : int status
-Gate : openGate()
-Gate : closeGate()
-Gate : getStatus()
-
 Camera -- ControlSystem
-Gate -- ControlSystem
 Ticket -- ControlSystem
 Vehicle -- ControlSystem
+ParkedMachine -- ControlSystem
 @enduml

@@ -9,6 +9,10 @@ Vehicle : turnRight()
 Passenger : int weight
 Bicycle : int wheelSize
 MotorVehicle : String engineType
+Game : start()
+Game : end()
+Game : save()
+Player : name
 FourWheel --|> MotorVehicle
 Truck --|> FourWheel
 Car --|> FourWheel
@@ -16,4 +20,6 @@ TwoWheel --|> MotorVehicle
 Bicycle --|> Vehicle
 Vehicle -- Passenger
 MotorVehicle --|> Vehicle
+Player -- Game
+Vehicle -- Game
 @enduml

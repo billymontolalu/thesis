@@ -6,6 +6,10 @@ Nurse --|> Employee
 Staff --|> Employee
 Pharmacist --|> Employee
 Medicine : name
-MedicalTreatment : 
-MedicalRecord : 
+MedicalTreatment : name
+Blling -- Patient
+Blling -- MedicalThreatment
+MedicalRecord -- Patient 
+Stock : date
+Stock -- Medicine
 @enduml

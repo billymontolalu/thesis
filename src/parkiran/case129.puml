@@ -13,8 +13,9 @@ ControlSystem : setPaid()
 ControlSystem : getPrice()
 
 Ticket : String no
+Ticket : String barcode
 Ticket : print()
-Ticket : getBarcode()
+Ticket : scanBarcode()
 
 Gate : int status
 Gate : openGate()

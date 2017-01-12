@@ -375,23 +375,6 @@ public class GraphCompare {
                 dg.addVertex(a2);
             }
         }
-        /*for(Object vertex1 : getV1().vertexSet())
-        {
-            found = false;
-            Atom a1 = (Atom) vertex1;
-            for(Object vertex2 : getV2().vertexSet())
-            {
-                Atom a2 = (Atom) vertex2;
-                if(a2.getLabel().equals(a1.getLabel()))
-                {
-                    found = true;
-                }
-            }
-            if(found == false)
-            {
-                dg.addVertex(a1);
-            }
-        }*/
         return dg;
     }
 

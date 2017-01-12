@@ -6,14 +6,20 @@
 package thesisapp;
 
 import graphmodel.GraphProcess;
+import graphmodel.RelationshipEdge;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import model.Atom;
+import model.Attribute;
 import model.Dataset;
+import model.Method;
+import org.jgrapht.DirectedGraph;
 
 /**
  *
@@ -28,6 +34,37 @@ public class MainApp extends javax.swing.JFrame {
         initComponents();
         //getParkiran();
     }
+    
+    private void printSemantic(ArrayList graphList, ArrayList indexList)
+    {
+        ArrayList<DirectedGraph> dgList = graphList;
+        int count = 0;
+        for(DirectedGraph dg : dgList)
+        {
+            for(Object o : dg.edgeSet())
+            {
+                RelationshipEdge re = (RelationshipEdge) o;
+                Atom v1 = (Atom)re.getV1();
+                Atom v2 = (Atom)re.getV2();
+                String index = (String)indexList.get(count);
+                if(v1 instanceof Method){
+                    Method m1 = (Method) v1;
+                    Method m2 = (Method) v2;
+                    System.out.println(index + "-" + m1.getParent().getLabel() + ":" + m1.getLabel() + " -- " + m2.getParent().getLabel() + ":" + m2.getLabel());
+                }else if(v1 instanceof Attribute)
+                {
+                    Attribute a1 = (Attribute) v1;
+                    Attribute a2 = (Attribute) v2;
+                    System.out.println(index + "-" + a1.getParent().getLabel() + ":" + a1.getLabel() + " -- " + a2.getParent().getLabel() + ":" + a2.getLabel());
+                }
+                else
+                {
+                    System.out.println(index + "-" + v1.getLabel() + " -- " + v2.getLabel());
+                }
+            }
+            count++;
+        }
+    }
 
     private void getData(String data, String order) {
         jProgressBar1.setValue(0);
@@ -35,6 +72,10 @@ public class MainApp extends javax.swing.JFrame {
         jProgressBar1.setStringPainted(true);
 
         int count_case = 30;
+        int totalII = 0;
+        int totalIIS = 0;
+        ArrayList semanticList = new ArrayList();
+        ArrayList indexList = new ArrayList();
         Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
         Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
         Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
@@ -101,18 +142,29 @@ public class MainApp extends javax.swing.JFrame {
                     rowsdi.add(0);
                     rowsii.add(0);
                 } else {
+                    int cII = gp.countInsertInsert();
+                    int cIIS = gp.countInsertSemantic();
+                    //gp.getInsertInsertSemantic();
+                    semanticList.add(gp.getInsertInsertSemantic());
+                    indexList.add(x + "," + y);
+                    totalII = totalII + cII;
+                    totalIIS = totalIIS + cIIS;
+                    
                     rowdd.add(gp.countDeleteDelete());
                     rowid.add(gp.countInsertDelete());
                     rowdi.add(gp.countDeleteInsert());
-                    rowii.add(gp.countInsertInsert());
+                    rowii.add(cII);
 
                     rowsdd.add(gp.countDeleteDelete());
                     rowsid.add(gp.countInsertDelete());
                     rowsdi.add(gp.countDeleteInsert());
-                    rowsii.add(gp.countInsertSemantic());
+                    rowsii.add(cIIS);
                 }
                 jProgressBar1.setString(x + " vs " + y);
             }
+            
+            jLabelII.setText(Integer.toString(totalII));
+            jLabelIIS.setText(Integer.toString(totalIIS));
 
             datadd.add(rowdd);
             dataid.add(rowid);
@@ -191,321 +243,7 @@ public class MainApp extends javax.swing.JFrame {
                 }
             });
         }
-    }
-
-    private void getBalapan() {
-        jProgressBar1.setValue(0);
-        jProgressBar1.setMaximum(30);
-        jProgressBar1.setStringPainted(true);
-        int count_case = 30;
-        Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> dataii = new Vector<Vector<Object>>();
-
-        Vector<Vector<Object>> datasdd = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasid = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasdi = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasii = new Vector<Vector<Object>>();
-
-        Vector<String> headers = new Vector<String>();
-        headers.add(" ");
-        for (int x = 1; x <= count_case; x++) {
-            headers.add(Integer.toString(x));
-        }
-
-        for (int x = 1; x <= count_case; x++) {
-            //tanpa semantic
-            Vector<Object> rowdd = new Vector<Object>();
-            rowdd.add(Integer.toString(x));
-
-            Vector<Object> rowid = new Vector<Object>();
-            rowid.add(Integer.toString(x));
-
-            Vector<Object> rowdi = new Vector<Object>();
-            rowdi.add(Integer.toString(x));
-
-            Vector<Object> rowii = new Vector<Object>();
-            rowii.add(Integer.toString(x));
-
-//            dengan semntic
-            Vector<Object> rowsdd = new Vector<Object>();
-            rowsdd.add(Integer.toString(x));
-
-            Vector<Object> rowsid = new Vector<Object>();
-            rowsid.add(Integer.toString(x));
-
-            Vector<Object> rowsdi = new Vector<Object>();
-            rowsdi.add(Integer.toString(x));
-
-            Vector<Object> rowsii = new Vector<Object>();
-            rowsii.add(Integer.toString(x));
-
-            for (int y = 1; y <= count_case; y++) {
-                Dataset app0 = new Dataset();
-                app0.readFile("balapan", "case20.puml");
-
-                Dataset app1 = new Dataset();
-                app1.readFile("balapan", "case2" + x + ".puml");
-
-                Dataset app2 = new Dataset();
-                app2.readFile("balapan", "case2" + y + ".puml");
-
-                GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-                if (x == y) {
-                    rowdd.add(0);
-                    rowid.add(0);
-                    rowdi.add(0);
-                    rowii.add(0);
-
-                    //menambahkan dengan semantuc
-                    rowsdd.add(0);
-                    rowsid.add(0);
-                    rowsdi.add(0);
-                    rowsii.add(0);
-                } else {
-                    rowdd.add(gp.countDeleteDelete());
-                    rowid.add(gp.countInsertDelete());
-                    rowdi.add(gp.countDeleteInsert());
-                    rowii.add(gp.countInsertInsert());
-
-                    rowsdd.add(gp.countDeleteDelete());
-                    rowsid.add(gp.countInsertDelete());
-                    rowsdi.add(gp.countDeleteInsert());
-                    rowsii.add(gp.countInsertSemantic());
-                }
-                jProgressBar1.setString(x + " vs " + y);
-            }
-
-            datadd.add(rowdd);
-            dataid.add(rowid);
-            datadi.add(rowdi);
-            dataii.add(rowii);
-
-            //semantic
-            datasdd.add(rowsdd);
-            datasid.add(rowsid);
-            datasdi.add(rowsdi);
-            datasii.add(rowsii);
-            jProgressBar1.setValue(x);
-        }
-
-        JTable tabledd = new JTable(datadd, headers);
-        jScrollPanedd.getViewport().removeAll();
-        jScrollPanedd.getViewport().add(tabledd);
-
-        JTable tableid = new JTable(dataid, headers);
-        jScrollPaneid.getViewport().removeAll();
-        jScrollPaneid.getViewport().add(tableid);
-
-        JTable tabledi = new JTable(datadi, headers);
-        jScrollPanedi.getViewport().removeAll();
-        jScrollPanedi.getViewport().add(tabledi);
-
-        JTable tableii = new JTable(dataii, headers);
-        jScrollPaneii.getViewport().removeAll();
-        jScrollPaneii.getViewport().add(tableii);
-
-        JTable tablesdd = new JTable(datasdd, headers);
-        jScrollPanesdd.getViewport().removeAll();
-        jScrollPanesdd.getViewport().add(tablesdd);
-
-        JTable tablesid = new JTable(datasid, headers);
-        jScrollPanesid.getViewport().removeAll();
-        jScrollPanesid.getViewport().add(tablesid);
-
-        JTable tablesdi = new JTable(datasdi, headers);
-        jScrollPanesdi.getViewport().removeAll();
-        jScrollPanesdi.getViewport().add(tablesdi);
-
-        JTable tablesii = new JTable(datasii, headers);
-        jScrollPanesii.getViewport().removeAll();
-        jScrollPanesii.getViewport().add(tablesii);
-        tablesii.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                //int score = (int) tableii.getModel().getValueAt(row, column);
-
-                if (!table.isRowSelected(row)) {
-                    if (!value.equals(tableii.getModel().getValueAt(row, column))) {
-                        c.setBackground(new java.awt.Color(239, 255, 0));
-                    } else {
-                        c.setBackground(table.getBackground());
-                    }
-                }
-                return c;
-            }
-        });
-        JFrame jFrame = this;
-        tablesii.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = tablesii.rowAtPoint(evt.getPoint());
-                int col = tablesii.columnAtPoint(evt.getPoint());
-                if (row >= 0 && col >= 0) {
-                    Detil detil = new Detil(jLabelStudiKasus.getText(), (row + 1), col, jFrame);
-                    detil.setVisible(true);
-                }
-            }
-        });
-    }
-
-    private void getParkiran() {
-        jProgressBar1.setValue(0);
-        jProgressBar1.setMaximum(30);
-        jProgressBar1.setStringPainted(true);
-        int count_case = 30;
-        Vector<Vector<Object>> datadd = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> dataid = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datadi = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> dataii = new Vector<Vector<Object>>();
-
-        Vector<Vector<Object>> datasdd = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasid = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasdi = new Vector<Vector<Object>>();
-        Vector<Vector<Object>> datasii = new Vector<Vector<Object>>();
-
-        Vector<String> headers = new Vector<String>();
-        headers.add(" ");
-        for (int x = 1; x <= count_case; x++) {
-            headers.add(Integer.toString(x));
-        }
-
-        for (int x = 1; x <= count_case; x++) {
-            Vector<Object> rowdd = new Vector<Object>();
-            rowdd.add(Integer.toString(x));
-
-            Vector<Object> rowid = new Vector<Object>();
-            rowid.add(Integer.toString(x));
-
-            Vector<Object> rowdi = new Vector<Object>();
-            rowdi.add(Integer.toString(x));
-
-            Vector<Object> rowii = new Vector<Object>();
-            rowii.add(Integer.toString(x));
-
-            //dengan semantic
-            Vector<Object> rowsdd = new Vector<Object>();
-            rowsdd.add(Integer.toString(x));
-
-            Vector<Object> rowsid = new Vector<Object>();
-            rowsid.add(Integer.toString(x));
-
-            Vector<Object> rowsdi = new Vector<Object>();
-            rowsdi.add(Integer.toString(x));
-
-            Vector<Object> rowsii = new Vector<Object>();
-            rowsii.add(Integer.toString(x));
-
-            for (int y = 1; y <= count_case; y++) {
-                Dataset app0 = new Dataset();
-                app0.readFile("parkiran", "case10.puml");
-
-                Dataset app1 = new Dataset();
-                app1.readFile("parkiran", "case1" + x + ".puml");
-
-                Dataset app2 = new Dataset();
-                app2.readFile("parkiran", "case1" + y + ".puml");
-
-                GraphProcess gp = new GraphProcess(app0.getGraph(), app1.getGraph(), app2.getGraph());
-                if (x == y) {
-                    rowdd.add(0);
-                    rowid.add(0);
-                    rowdi.add(0);
-                    rowii.add(0);
-                } else {
-                    rowdd.add(gp.countDeleteDelete());
-                    rowid.add(gp.countInsertDelete());
-                    rowdi.add(gp.countDeleteInsert());
-                    rowii.add(gp.countInsertInsert());
-                }
-
-                if (x == y) {
-                    rowsdd.add(0);
-                    rowsid.add(0);
-                    rowsdi.add(0);
-                    rowsii.add(0);
-                } else {
-                    rowsdd.add(gp.countDeleteDelete());
-                    rowsid.add(gp.countInsertDelete());
-                    rowsdi.add(gp.countDeleteInsert());
-                    rowsii.add(gp.countInsertSemantic());
-                }
-                jProgressBar1.setString(x + " vs " + y);
-                //GraphCompare gc1 = new GraphCompare(app0.getGraph(), app1.getGraph());
-                //GraphCompare gc2 = new GraphCompare(app0.getGraph(), app2.getGraph());
-            }
-            datadd.add(rowdd);
-            dataid.add(rowid);
-            datadi.add(rowdi);
-            dataii.add(rowii);
-
-//            dengan semantic
-            datasdd.add(rowsdd);
-            datasid.add(rowsid);
-            datasdi.add(rowsdi);
-            datasii.add(rowsii);
-            jProgressBar1.setValue(x);
-        }
-
-        JTable tabledd = new JTable(datadd, headers);
-        jScrollPanedd.getViewport().removeAll();
-        jScrollPanedd.getViewport().add(tabledd);
-
-        JTable tableid = new JTable(dataid, headers);
-        jScrollPaneid.getViewport().removeAll();
-        jScrollPaneid.getViewport().add(tableid);
-
-        JTable tabledi = new JTable(datadi, headers);
-        jScrollPanedi.getViewport().removeAll();
-        jScrollPanedi.getViewport().add(tabledi);
-
-        JTable tableii = new JTable(dataii, headers);
-        jScrollPaneii.getViewport().removeAll();
-        jScrollPaneii.getViewport().add(tableii);
-
-        JTable tablesdd = new JTable(datadd, headers);
-        jScrollPanesdd.getViewport().removeAll();
-        jScrollPanesdd.getViewport().add(tablesdd);
-
-        JTable tablesid = new JTable(dataid, headers);
-        jScrollPanesid.getViewport().removeAll();
-        jScrollPanesid.getViewport().add(tablesid);
-
-        JTable tablesdi = new JTable(datadi, headers);
-        jScrollPanesdi.getViewport().removeAll();
-        jScrollPanesdi.getViewport().add(tablesdi);
-
-        JTable tablesii = new JTable(datasii, headers);
-        jScrollPanesii.getViewport().removeAll();
-        jScrollPanesii.getViewport().add(tablesii);
-        tablesii.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                //int score = (int) tableii.getModel().getValueAt(row, column);
-
-                if (!table.isRowSelected(row)) {
-                    if (!value.equals(tableii.getModel().getValueAt(row, column))) {
-                        c.setBackground(new java.awt.Color(239, 255, 0));
-                    } else {
-                        c.setBackground(table.getBackground());
-                    }
-                }
-                return c;
-            }
-        });
-        JFrame jFrame = this;
-        tablesii.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int row = tablesii.rowAtPoint(evt.getPoint());
-                int col = tablesii.columnAtPoint(evt.getPoint());
-                if (row >= 0 && col >= 0) {
-                    Detil detil = new Detil(jLabelStudiKasus.getText(), (row + 1), col, jFrame);
-                    detil.setVisible(true);
-                }
-            }
-        });
+        printSemantic(semanticList, indexList);
     }
 
     public enum Type {
@@ -555,6 +293,10 @@ public class MainApp extends javax.swing.JFrame {
         jScrollPanesii = new javax.swing.JScrollPane();
         jLabelStudiKasus = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelII = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabelIIS = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -580,6 +322,14 @@ public class MainApp extends javax.swing.JFrame {
         jTabbedPane2.addTab("Insert - Insert", jScrollPanesii);
 
         jLabelStudiKasus.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
+        jLabel3.setText("Total Kasus Insert Insert :");
+
+        jLabelII.setText("0");
+
+        jLabel4.setText("Total Kasus Insert Insert Semantic :");
+
+        jLabelIIS.setText("0");
 
         jMenu1.setText("File");
 
@@ -638,6 +388,16 @@ public class MainApp extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelII, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelIIS, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -652,7 +412,13 @@ public class MainApp extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelII)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelIIS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -738,6 +504,10 @@ public class MainApp extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelII;
+    private javax.swing.JLabel jLabelIIS;
     private javax.swing.JLabel jLabelStudiKasus;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

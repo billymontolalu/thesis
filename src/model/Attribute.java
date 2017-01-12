@@ -38,8 +38,11 @@ public class Attribute extends Atom {
     public boolean equals(Object otherObject){
         if(otherObject instanceof Attribute)
         {
+            Semantic s = new Semantic();
             Attribute c = (Attribute) otherObject;
-            if(this.getLabel().equals(c.getLabel()) && c.getParent().equals(this.parent))
+            String cLabel =s.splitSyntax(c.getLabel());
+            String thisLabel =s.splitSyntax(this.getLabel());
+            if(cLabel.equalsIgnoreCase(thisLabel) && c.getParent().equals(this.parent))
             {
                 return true;
             }
@@ -52,10 +55,8 @@ public class Attribute extends Atom {
         if(otherObject instanceof Attribute)
         {
             Attribute c = (Attribute) otherObject;
-            if(this.getLabel().equals(c.getLabel()))
-            {
-                return false;
-            }
+            if(c.equals(this)) return false;
+            
             Semantic s = new Semantic();
             if(s.isSimiliar(this.getLabel(), c.getLabel()) && s.isSimiliar(this.getParent().getLabel(), c.getParent().getLabel()))
             {

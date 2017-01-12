@@ -6,6 +6,7 @@ Vehicle : DateTime timeOut
 Camera : String ip
 Camera : getPicture()
 Camera : getLicenseNumber()
+Camera : pictureToText()
 
 ControlSystem : printInvoice()
 ControlSystem : getPaid()

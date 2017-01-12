@@ -1,7 +1,10 @@
 @startuml
-Vehicle : int number
-Vehicle : DateTime timeIn
-Vehicle : DateTime timeOut
+ParkedCar : int licenseNum
+ParkedCar : int numOfMinutesParked
+ParkedCar : DateTime timeIn
+ParkedCar : DateTime timeOut
+ParkedCar : getLicenseNum()
+ParkedCar : getNumOfMinutesParked()
 
 Camera : String ip
 Camera : getPicture()
@@ -24,5 +27,5 @@ Gate : getStatus()
 Camera -- ControlSystem
 Gate -- ControlSystem
 Ticket -- ControlSystem
-Vehicle -- ControlSystem
+ParkedCar -- ControlSystem
 @enduml

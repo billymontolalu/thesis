@@ -2,6 +2,7 @@
 Vehicle : int number
 Vehicle : DateTime timeIn
 Vehicle : DateTime timeOut
+Vehicle : double long
 
 Camera : String ip
 Camera : getPicture()

@@ -20,6 +20,7 @@ Gate : int status
 Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
+Gate : setStatus()
 
 Camera -- ControlSystem
 Gate -- ControlSystem

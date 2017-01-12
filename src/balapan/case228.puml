@@ -9,11 +9,11 @@ Vehicle : turnRight()
 Passenger : int weight
 Bicycle : int wheelSize
 MotorVehicle : String engineType
-FourWheel --|> MotorVehicle
-Truck --|> FourWheel
-Car --|> FourWheel
-TwoWheel --|> MotorVehicle
-Bicycle --|> Vehicle
+Truck --|> MotorVehicle
+Car --|> MotorVehicle
+Bicycle --|> NonMotorVehicle
+Pedicab --|> NonMotorVehicle
+NonMotorVehicle --|> Vehicle
 Vehicle -- Passenger
 MotorVehicle --|> Vehicle
 @enduml

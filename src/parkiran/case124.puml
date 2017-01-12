@@ -21,8 +21,13 @@ Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
 
+Report : date
+Report : cost
+Report : show()
+
 Camera -- ControlSystem
 Gate -- ControlSystem
 Ticket -- ControlSystem
 Vehicle -- ControlSystem
+Report -- ControlSystem
 @enduml

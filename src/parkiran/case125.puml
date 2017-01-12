@@ -21,8 +21,14 @@ Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
 
+CardReader : transaction
+CardReader : status
+CardReader : getStatus()
+CardReader : pay()
+
 Camera -- ControlSystem
 Gate -- ControlSystem
 Ticket -- ControlSystem
 Vehicle -- ControlSystem
+CardReader -- ControlSystem
 @enduml

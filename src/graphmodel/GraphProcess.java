@@ -72,30 +72,34 @@ public class GraphProcess {
         for(Object node1 : newNode1.vertexSet())
         {
             Atom n1 = (Atom) node1;
+            double max = -1;
+            Atom temp = null;
             for(Object node2 : newNode2.vertexSet())
             {
                 Atom n2 = (Atom) node2;
                 if(n1.equals(n2))
                 {
-                    /*if(!dg.containsVertex(n1))
-                        dg.addVertex(n1);
-                    if(!dg.containsVertex(n2))
-                        dg.addVertex(n2);*/
+                    
                 }
                 else if(n1.equalSemantic(n2))
                 {
-                    /*double score = n1.getSemanticScore(n2);
-                    RelatedAtom ra = new RelatedAtom();
-                    ra.setScore(score);
-                    ra.setV0(n1);
-                    ra.setV1(n2);*/
-                    if(!dg.containsVertex(n1))
-                        dg.addVertex(n1);
-                    if(!dg.containsVertex(n2))
-                        dg.addVertex(n2);
-                    if(!dg.containsEdge(n1, n2))
-                        dg.addEdge(n1, n2, new RelationshipEdge(n1, n2, "--|>"));
+                    double score = n1.getSemanticScore(n2);
+                    if(score > max)
+                    {
+                        max = score;
+                        temp = n2;
+                    }
                 }
+            }
+            
+            if(max != -1)
+            {
+                if(!dg.containsVertex(n1))
+                    dg.addVertex(n1);
+                if(!dg.containsVertex(temp))
+                    dg.addVertex(temp);
+                if(!dg.containsEdge(n1, temp))
+                    dg.addEdge(n1, temp, new RelationshipEdge(n1, temp, "--|>"));
             }
         }
         

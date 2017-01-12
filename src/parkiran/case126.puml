@@ -12,6 +12,8 @@ ControlSystem : getPaid()
 ControlSystem : setPaid()
 ControlSystem : getPrice()
 
+PaymentMethod : name
+
 Ticket : String no
 Ticket : print()
 Ticket : getBarcode()

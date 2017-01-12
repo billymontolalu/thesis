@@ -33,8 +33,11 @@ public class Method extends Atom{
     public boolean equals(Object otherObject){
         if(otherObject instanceof Method)
         {
+            Semantic s = new Semantic();
             Method c = (Method) otherObject;
-            if(this.getLabel().equals(c.getLabel()) && this.parent.equals(c.getParent()) )
+            String cLabel = s.splitSyntax(c.getLabel());
+            String thisLabel = s.splitSyntax(this.getLabel());
+            if(cLabel.equalsIgnoreCase(thisLabel) && this.parent.equals(c.getParent()) )
             {
                 return true;
             }
@@ -47,10 +50,7 @@ public class Method extends Atom{
         if(otherObject instanceof Method)
         {
             Method c = (Method) otherObject;
-            if(this.getLabel().equals(c.getLabel()))
-            {
-                return false;
-            }
+            if(c.equals(this)) return false;
             
             Semantic s = new Semantic();
             if(s.isSimiliar(this.getLabel(), c.getLabel()) && s.isSimiliar(this.getParent().getLabel(), c.getParent().getLabel()))

@@ -6,9 +6,17 @@ Vehicle : int passenger
 Vehicle : int maxWeight
 Vehicle : turnLeft()
 Vehicle : turnRight()
+Vehicle : getCollision()
+Vehicle : setBonus()
+Vehicle : getAvailable()
+Vehicle : getMoney()
+Vehicle : setSpeed()
 Passenger : int weight
+Passenger : minusSpeed()
 Bicycle : int wheelSize
 MotorVehicle : String engineType
+Collision : minusPoint()
+Car : nosValue()
 FourWheel --|> MotorVehicle
 Truck --|> FourWheel
 Car --|> FourWheel
@@ -16,4 +24,7 @@ TwoWheel --|> MotorVehicle
 Bicycle --|> Vehicle
 Vehicle -- Passenger
 MotorVehicle --|> Vehicle
+People --|> Collision
+Facility --|> Collision
+Vehicle --> Collision
 @enduml

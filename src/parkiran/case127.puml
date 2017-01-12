@@ -1,16 +1,17 @@
 @startuml
 Vehicle : int number
-Vehicle : DateTime timeIn
-Vehicle : DateTime timeOut
 
 Camera : String ip
 Camera : getPicture()
 Camera : getLicenseNumber()
 
-ControlSystem : printInvoice()
-ControlSystem : getPaid()
-ControlSystem : setPaid()
-ControlSystem : getPrice()
+CheckIn : DateTime timeIn
+CheckIn : Vehicle vehicle
+
+CheckOut : DateTime timeOut
+CheckOut : Vehicle vehicle
+CheckOut : getCost()
+CheckOut : setPaid()
 
 Ticket : String no
 Ticket : print()
@@ -21,8 +22,8 @@ Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
 
-Camera -- ControlSystem
-Gate -- ControlSystem
-Ticket -- ControlSystem
-Vehicle -- ControlSystem
+Vehicle -- CheckIn
+Vehicle -- CheckOut
+Vehicle -- Camera
+Ticket -- CheckIn
 @enduml

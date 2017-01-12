@@ -21,8 +21,14 @@ Gate : openGate()
 Gate : closeGate()
 Gate : getStatus()
 
+Member : name
+Member : plateNo
+Member : memberType
+Member : bool isMember()
+
 Camera -- ControlSystem
 Gate -- ControlSystem
 Ticket -- ControlSystem
 Vehicle -- ControlSystem
+Member -- Vehicle
 @enduml
