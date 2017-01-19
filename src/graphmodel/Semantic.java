@@ -31,7 +31,7 @@ import model.SyntaxString;
 public class Semantic {
 
     private static final ILexicalDatabase db = new NictWordNet();
-    public static final double threshold = 0.6;
+    public static final double threshold = 0.3;
     public static final double classThreshold = 0.6;
     public static final double methodThreshold = 0.2;
     public static final double attributeThreshold = 0.2;
@@ -266,6 +266,11 @@ public class Semantic {
             return sum / scores.size();
         }
         return sum;
+    }
+    
+    private void splitCamelCase()
+    {
+        
     }
 
     private String[] splitCamelCase(String word) {

@@ -1,0 +1,4 @@
+@startuml
+Human --|> Creature
+Class Gender
+@enduml

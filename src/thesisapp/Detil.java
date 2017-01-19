@@ -73,7 +73,7 @@ public class Detil extends javax.swing.JFrame {
             conflict = conflict + "\nInsert-Insert\n";
             conflict = conflict + GraphVis.print(gp.getInsertInsert());
             conflict = conflict + "\nInsert-Insert Semantic\n";
-            conflict = conflict + GraphVis.print(gp.getInsertInsertSemantic());
+            conflict = conflict + GraphVis.print(gp.getInsertInsertSemantic(0,0));
             ConflictJInternalFrame cJf = new ConflictJInternalFrame(conflict);
             jDesktopPane1.add(cJf);
             cJf.show();

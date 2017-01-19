@@ -145,7 +145,9 @@ public class MainApp extends javax.swing.JFrame {
                     int cII = gp.countInsertInsert();
                     int cIIS = gp.countInsertSemantic();
                     //gp.getInsertInsertSemantic();
-                    semanticList.add(gp.getInsertInsertSemantic());
+                    if(x != y){
+                        semanticList.add(gp.getInsertInsertSemantic(x,y));
+                    }
                     indexList.add(x + "," + y);
                     totalII = totalII + cII;
                     totalIIS = totalIIS + cIIS;

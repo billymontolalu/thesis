@@ -8,6 +8,9 @@ package graphmodel;
 import java.util.ArrayList;
 import java.util.List;
 import model.Atom;
+import model.Class;
+import model.Attribute;
+import model.Method;
 import model.RelatedAtom;
 import model.Relation;
 import org.jgrapht.DirectedGraph;
@@ -59,7 +62,7 @@ public class GraphProcess {
         return related;
     }
     
-    public DirectedGraph getInsertInsertSemantic()
+    public DirectedGraph getInsertInsertSemantic(int x, int y)
     {
         ArrayList<RelatedAtom> raList = new ArrayList<RelatedAtom>();
         DirectedGraph dg = new DirectedMultigraph<>(
@@ -77,6 +80,29 @@ public class GraphProcess {
             for(Object node2 : newNode2.vertexSet())
             {
                 Atom n2 = (Atom) node2;
+                if(n1.equals(n2)) continue;
+                if(n1 instanceof Method && n2 instanceof Method)
+                {
+                    Method m1 = (Method) n1;
+                    Method m2 = (Method) n2;
+                    if(m1.getParent().getLabel().equals(m2.getParent().getLabel()))
+                    {
+                        //System.out.println(x + "," + y + "|" + n1.getLabel() + " -- " + n2.getLabel());
+                    }
+                }
+                else if(n1 instanceof Attribute && n2 instanceof Attribute)
+                {
+                    Attribute a1 = (Attribute) n1;
+                    Attribute a2 = (Attribute) n2;
+                    if(a1.getParent().getLabel().equals(a2.getParent().getLabel()))
+                    {
+                        //System.out.println(x + "," + y + "|" + n1.getLabel() + " -- " + n2.getLabel());
+                    }
+                }else if(n1 instanceof Class && n2 instanceof Class)
+                {
+                    //System.out.println(x + "," + y + "|" + n1.getLabel() + " -- " + n2.getLabel());
+                }
+                
                 if(n1.equals(n2))
                 {
                     
@@ -224,12 +250,12 @@ public class GraphProcess {
     
     public int countInsertSemantic()
     {
-        DirectedGraph dg = getInsertInsertSemantic();
         int count = 0;
+        /*DirectedGraph dg = getInsertInsertSemantic(0, 0);
         for(Object x : dg.edgeSet())
         {
             count ++;
-        }
+        }*/
         return count;
     }
     
